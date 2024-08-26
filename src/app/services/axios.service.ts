@@ -14,11 +14,12 @@ export class AxiosService {
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true
     });
 
     this.httpClient.interceptors.request.use(function (config) {
-      const token = cookieService.get('jwt');
+      const token = cookieService.get('accessToken');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
