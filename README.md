@@ -2,6 +2,16 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.0.
 
+## Installation
+
+Before you begin, make sure you have Node.js installed on your machine. Then, follow these steps to install the project:
+
+1. Clone the repository to your local machine.
+2. Navigate to the project directory: cd HK-Front/hk-front.
+3. Run the command npm install to install the project's dependencies.
+4. Install the Prettier extension to format the code. You can find it in the extension marketplace of your favorite code editor.
+That's it! Now you have the project installed on your local machine.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
