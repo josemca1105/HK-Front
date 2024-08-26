@@ -10,6 +10,7 @@ Before you begin, make sure you have Node.js installed on your machine. Then, fo
 2. Navigate to the project directory: cd HK-Front/hk-front.
 3. Run the command npm install to install the project's dependencies.
 4. Install the Prettier extension to format the code. You can find it in the extension marketplace of your favorite code editor.
+
 That's it! Now you have the project installed on your local machine.
 
 ## Development server
