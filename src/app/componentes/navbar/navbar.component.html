@@ -1,15 +1,15 @@
 <nav>
-  <ul>
-    <li>
-      <a routerLink="/inicio">Inicio</a>
-    </li>
-    <li>
-      <a routerLink="/login">Iniciar sesión</a>
-    </li>
-    <li>
-      <a routerLink="/register">Registrarse</a>
-    </li>
-  </ul>
+  <a routerLink="/inicio">Inicio</a>
+  <div *ngIf="user">
+    <span>Bienvenido, {{ user.email }}</span>
+    <a routerLink="/perfil">Perfil</a>
+    <button (click)="logout()">Logout</button>
+  </div>
+  <div *ngIf="!user">
+    <a routerLink="/login">Login</a>
+    <a routerLink="/register">Register</a>
+  </div>
+  <a routerLink="/captaciones">Captaciones</a>
 </nav>
 
 <router-outlet></router-outlet>

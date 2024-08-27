@@ -23,23 +23,16 @@ export class LoginComponent {
     this.focus = hasFocus;
   }
 
-  async onSubmit(form: NgForm): Promise<void> {
-    if (form.valid) {
-      try {
-        const response = await this.authService.login(this.email, this.password);
-        console.log('Login successful', response);
-        this.router.navigate(['/']);
-      } catch (error) {
-        console.error('Login error', error);
-        // @ts-ignore
-        if (error.response && error.response.data && error.response.data.detail === 'User not found') {
-          this.errorMessage = 'Usuario no encontrado. Por favor, verifica tu correo electrónico y contraseña.';
-        } else {
-          this.errorMessage = 'Error en el inicio de sesión. Por favor, inténtalo de nuevo más tarde.';
+  login() {
+    this.authService.login({ email: this.email, password: this.password })
+      .subscribe({
+        next: (response) => {
+          console.log('Login successful', response);
+          this.router.navigate(['/']);
+        },
+        error: (error) => {
+          console.error('Login failed', error);
         }
-      }
-    } else {
-      console.log('Form is invalid');
-    }
+      });
   }
 }

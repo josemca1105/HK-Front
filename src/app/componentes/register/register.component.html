@@ -1,1 +1,14 @@
-<p>register works!</p>
+<form #loginForm="ngForm" >
+  <h2>Register</h2>
+  <div class="login">
+    <h5>Name</h5>
+    <input type="text" [(ngModel)]="f_name" name="f_name" class="text-black border-2">
+    <h5>Email</h5>
+    <input type="email" [(ngModel)]="email" name="email" class="text-black border-2">
+    <h5>Password</h5>
+    <input type="password" [(ngModel)]="password" name="password" class="text-black border-2">
+  </div>
+  <a routerLink="/inicio">Inicio</a>
+  <a routerLink="/login">Login</a>
+  <button type="submit">Register</button>
+</form>
