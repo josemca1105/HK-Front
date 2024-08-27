@@ -20,5 +20,21 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-
+  register() {
+    const userData = {
+      f_name: this.f_name,
+      email: this.email,
+      password: this.password
+    };
+    this.authService.register(userData)
+      .subscribe({
+        next: (response) => {
+          console.log('Register successful', response);
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          console.error('Register failed', error);
+        }
+      });
+  }
 }
