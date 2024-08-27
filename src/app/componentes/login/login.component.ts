@@ -9,18 +9,23 @@ import { NgIf } from '@angular/common';
   standalone: true,
   imports: [FormsModule, NgIf, RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   email = '';
   password = '';
-  errorMessage = ''
+  errorMessage = '';
   focus = false;
+  passwordFieldType: string = 'password'; // Initial state to hide password
 
   constructor(private authService: AuthService, private router: Router) {}
 
   setFocus(hasFocus: boolean) {
     this.focus = hasFocus;
+  }
+
+  togglePasswordVisibility(): void {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 
   login() {
@@ -36,3 +41,4 @@ export class LoginComponent {
       });
   }
 }
+
