@@ -1,85 +1,30 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { AxiosService } from './axios.service';
-import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = 'http://localhost:8000/api';
 
   constructor(
-    private axiosService: AxiosService,
-    private cookieService: CookieService,
-    private router: Router
+    private http: HttpClient
   ) { }
 
-  async register(f_name: string, email: string, password: string) {
-    const registerData = {
-      f_name: f_name,
-      email: email,
-      password: password
-    };
-    const response = await this.axiosService.post('register', registerData);
-
-    const accessToken = response.data.token;
-
-    if (accessToken) {
-      this.storeAccessToken(accessToken);
-      this.router.navigate(['/login']);
-    }
-
-    return response.data;
+  register(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, userData);
   }
 
-  async login(email: string, password: string) {
-    const loginData = {
-      email: email,
-      password: password
-    };
-    console.log(loginData);
-
-    const response = await this.axiosService.post('login', loginData);
-
-    const accessToken = response.data.jwt;
-
-    if (accessToken) {
-      this.storeAccessToken(accessToken);
-      this.router.navigate(['/']);
-    }
-
-    return response.data;
+  login(credentials: { email: string, password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, credentials, { withCredentials: true });
   }
 
-  async getUser() {
-    const response = await this.axiosService.get('auth');
-    console.log(response.data);
-    return response.data;
+  getUser(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/auth`, { withCredentials: true });
   }
 
-  async logout() {
-    const response = await this.axiosService.post('logout', {});
-    this.cookieService.delete('accessToken');
-    this.router.navigate(['/login']);
-    return response.data;
-
-  }
-
-  private storeAccessToken(token: string): void {
-    this.cookieService.set('accessToken', token, undefined, '/');
-  }
-
-  private getAccessToken(): string | null {
-    return this.cookieService.get('accessToken');
-  }
-
-  public getToken(): string | null {
-    return this.getAccessToken();
-  }
-
-  isUserLoggedIn(): boolean {
-    const accessToken = this.getAccessToken();
-    console.log(!!accessToken);
-    return !!accessToken;
+  logout(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true });
   }
 }
