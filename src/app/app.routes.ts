@@ -17,17 +17,15 @@ import { CaptacionesPersonalEditComponent } from './componentes/captaciones-pers
 
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+
   {
     path: '',
     component: NavbarComponent,
     children: [
-      {
-        path: '',
-        redirectTo: 'inicio',
-        pathMatch: 'full'
-      },
       {
         path: 'inicio',
         component: HomeComponent
