@@ -3,9 +3,13 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
   ],
-  theme: {
-    extend: {},
-  },
+  theme: { 
+    extend: { 
+        fontFamily: { 
+            "raleway": ['Raleway', 'sans-serif'] 
+        } 
+    }, 
+}, 
   plugins: [],
 }
 
