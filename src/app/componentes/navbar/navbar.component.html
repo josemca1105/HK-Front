@@ -1,19 +1,16 @@
 <nav>
   <a routerLink="/inicio">Inicio</a>
   <div *ngIf="user">
-    <span>Bienvenido, {{ user.email }}</span>
+    <span>Bienvenido, {{ user.f_name }}</span>
     <a routerLink="/perfil">Perfil</a>
     <button (click)="logout()">Logout</button>
   </div>
   <div *ngIf="!user">
-    <a routerLink="/login">Login</a>
-    <a routerLink="/register">Register</a>
+    <a routerLink="/login">Login</a> <a routerLink="/register">Register</a>
   </div>
   <a routerLink="/users-table">tabla usuarios</a>
-  <a routerLink="/users-create">crear usuarios</a>
   <a routerLink="/captaciones">captaciones</a>
   <a routerLink="/captaciones-create">crear captaciones</a>
   <a routerLink="/captaciones-admin-table">tabla captaciones</a>
 </nav>
-
 <router-outlet></router-outlet>
