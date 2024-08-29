@@ -14,6 +14,7 @@ import { CaptacionesAdminTableComponent } from './admin/captaciones-admin-table/
 import { CaptacionesAdminEditComponent } from './admin/captaciones-admin-edit/captaciones-admin-edit.component';
 import { CaptacionesPersonalCreateComponent } from './componentes/captaciones-personal-create/captaciones-personal-create.component';
 import { CaptacionesPersonalEditComponent } from './componentes/captaciones-personal-edit/captaciones-personal-edit.component';
+import { PruebaComponent } from './pages/prueba/prueba.component';
 
 
 export const routes: Routes = [
@@ -69,6 +70,10 @@ export const routes: Routes = [
       {
         path: 'captaciones-edit/:id',
         component: CaptacionesPersonalEditComponent
+      },
+      {
+        path: 'prueba',
+        component: PruebaComponent
       },
       {
         path: '404',
