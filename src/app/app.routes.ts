@@ -15,13 +15,22 @@ import { CaptacionesAdminEditComponent } from './admin/captaciones-admin-edit/ca
 import { CaptacionesPersonalCreateComponent } from './componentes/captaciones-personal-create/captaciones-personal-create.component';
 import { CaptacionesPersonalEditComponent } from './componentes/captaciones-personal-edit/captaciones-personal-edit.component';
 import { PruebaComponent } from './pages/prueba/prueba.component';
-
+import { NewPasswordRequestComponent } from './componentes/new-password-request/new-password-request.component';
+import { NewPasswordCreateComponent } from './componentes/new-password-create/new-password-create.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  {
+    path: 'request-password',
+    component: NewPasswordRequestComponent,
+  },
+  {
+    path: 'create-new-password',
+    component: NewPasswordCreateComponent,
+  },
 
   {
     path: '',
@@ -29,57 +38,57 @@ export const routes: Routes = [
     children: [
       {
         path: 'inicio',
-        component: HomeComponent
+        component: HomeComponent,
       },
       {
         path: 'perfil',
-        component: PerfilComponent
+        component: PerfilComponent,
       },
       {
         path: 'perfil-edit/:id',
-        component: PerfilEditComponent
+        component: PerfilEditComponent,
       },
       {
         path: 'users-create',
-        component: UsersCreateComponent
+        component: UsersCreateComponent,
       },
       {
         path: 'users-table',
-        component: UsersTableComponent
+        component: UsersTableComponent,
       },
       {
         path: 'users-edit/:id',
-        component: UsersEditComponent
+        component: UsersEditComponent,
       },
       {
         path: 'captaciones',
-        component: CaptacionesComponent
+        component: CaptacionesComponent,
       },
       {
         path: 'captaciones-admin-table',
-        component: CaptacionesAdminTableComponent
+        component: CaptacionesAdminTableComponent,
       },
       {
         path: 'captaciones-admin-edit/:id',
-        component: CaptacionesAdminEditComponent
+        component: CaptacionesAdminEditComponent,
       },
       {
         path: 'captaciones-create',
-        component: CaptacionesPersonalCreateComponent
+        component: CaptacionesPersonalCreateComponent,
       },
       {
         path: 'captaciones-edit/:id',
-        component: CaptacionesPersonalEditComponent
+        component: CaptacionesPersonalEditComponent,
       },
       {
         path: 'prueba',
-        component: PruebaComponent
+        component: PruebaComponent,
       },
-      {
-        path: '404',
-        component: Error404Component
-      }
-    ]
+    ],
   },
-  { path: '**', component: Error404Component }
+  {
+    path: '404',
+    component: Error404Component,
+  },
+  { path: '**', component: Error404Component },
 ];

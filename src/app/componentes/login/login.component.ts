@@ -42,7 +42,7 @@ export class LoginComponent {
       return;
     }
 
-    this.errorMessage = ''; // Limpiar cualquier mensaje de error previo
+    this.showError = false;
     this.isLoading = true; // Mostrar el loader
     this.authService
       .login({ email: this.email, password: this.password })
