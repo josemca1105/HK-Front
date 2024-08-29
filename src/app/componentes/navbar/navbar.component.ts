@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NgIf } from '@angular/common';
 
@@ -13,7 +13,10 @@ import { NgIf } from '@angular/common';
 export class NavbarComponent {
   user: any = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.authService.getUser().subscribe({
@@ -32,6 +35,7 @@ export class NavbarComponent {
       next: (response) => {
         console.log('Logout successful', response);
         this.user = null;
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Logout failed', error);
