@@ -19,7 +19,7 @@
         <td class="px-6 py-4">{{ capitalizeFirstLetter(user.role) }}</td>
         <td class="px-6 py-4">
           <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" (click)="editUser(user.id)">Editar</button>
-          <button href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
+          <button class="font-medium text-red-600 dark:text-red-500 hover:underline" (click)="deleteuser(user.id)">Eliminar</button>
         </td>
       </tr>
     </tbody>

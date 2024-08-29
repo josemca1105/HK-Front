@@ -15,5 +15,8 @@ export class UsersService {
     return this.http.get(`${this.apiUrl}`, { withCredentials: true });
   }
 
-
+  // Eliminar un usuario
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}-delete/${id}`, { withCredentials: true });
+  }
 }

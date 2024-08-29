@@ -24,19 +24,32 @@ export class UsersTableComponent implements OnInit {
 
   loadUsers(): void {
     this.usersService.getUsers()
-    .subscribe({
-      next: (response) => {
-        console.log('Users fetched successfully', response);
-        this.users = response;
-      },
-      error: (error) => {
-        console.error('Error getting users', error);
-      }
-    });
+      .subscribe({
+        next: (response) => {
+          console.log('Users fetched successfully', response);
+          this.users = response;
+        },
+        error: (error) => {
+          console.error('Error getting users', error);
+        }
+      });
   }
 
   editUser(id: number) {
     this.router.navigate(['/users-edit', id]);
+  }
+
+  deleteuser(id: number) {
+    this.usersService.deleteUser(id)
+      .subscribe({
+        next: (response) => {
+          console.log('User deleted successfully', response);
+          this.loadUsers();
+        },
+        error: (error) => {
+          console.error('Error deleting user', error);
+        }
+      });
   }
 
   capitalizeFirstLetter(f_name: string): string {
