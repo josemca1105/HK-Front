@@ -39,6 +39,10 @@ export class UsersTableComponent implements OnInit {
     this.router.navigate(['/users-edit', id]);
   }
 
+  createuser() {
+    this.router.navigate(['/users-create']);
+  }
+
   deleteuser(id: number) {
     this.usersService.deleteUser(id)
       .subscribe({
