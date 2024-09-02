@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf, CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-new-password-request',
@@ -21,7 +22,7 @@ export class NewPasswordRequestComponent {
   errorMessage = '';
   successMessage = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   requestPassword() {
     if (!this.email) {
@@ -37,25 +38,47 @@ export class NewPasswordRequestComponent {
     this.showSuccessAlert = false; // Limpiar cualquier mensaje de error previo
     this.isLoading = true; // Mostrar el loader
 
+    // Llamar al servicio de autenticación para solicitar el restablecimiento de la contraseña
+    this.authService.requestPasswordReset(this.email)
+      .subscribe({
+        next: (response) => {
+          console.log('Solicitud de restablecimiento de contraseña exitosa', response);
+          this.successMessage = 'Éxito: Se ha enviado el enlace de recuperación.';
+          this.showSuccessAlert = true; // Mostrar alerta de éxito
+          this.showErrorAlert = false; // Ocultar alerta de error
+          this.isLoading = false; // Ocultar el loader
+          setTimeout(() => {
+            this.router.navigate(['/create-new-password']); // Redirigir a la página de reestablecimiento de contraseña
+          }, 2000); // Tiempo de duración de la animación de salida
+        },
+        error: (error) => {
+          console.error('Error al solicitar restablecimiento de contraseña', error);
+          this.errorMessage =
+            'Error: No se pudo enviar el enlace. Inténtelo de nuevo.';
+          this.showError = true;
+          this.showErrorAlert = true; // Mostrar alerta de error
+          this.showSuccessAlert = false; // Ocultar alerta de éxito
+        }
+      })
     // Simulación de respuesta exitosa o fallida después de 2 segundos
-    setTimeout(() => {
-      const isSuccess = Math.random() > 0.5; // Simulación aleatoria de éxito o fallo
+    // setTimeout(() => {
+    //   const isSuccess = Math.random() > 0.5; // Simulación aleatoria de éxito o fallo
 
-      if (isSuccess) {
-        console.log('Exito');
-        this.successMessage = 'Éxito: Se ha enviado el enlace de recuperación.';
-        this.showSuccessAlert = true; // Mostrar alerta de éxito
-        this.showErrorAlert = false; // Ocultar alerta de error
-      } else {
-        this.errorMessage =
-          'Error: No se pudo enviar el enlace. Inténtelo de nuevo.';
-        this.showError = true;
-        this.showErrorAlert = true; // Mostrar alerta de error
-        this.showSuccessAlert = false; // Ocultar alerta de éxito
-      }
+    //   if (isSuccess) {
+    //     console.log('Exito');
+    //     this.successMessage = 'Éxito: Se ha enviado el enlace de recuperación.';
+    //     this.showSuccessAlert = true; // Mostrar alerta de éxito
+    //     this.showErrorAlert = false; // Ocultar alerta de error
+    //   } else {
+    //     this.errorMessage =
+    //       'Error: No se pudo enviar el enlace. Inténtelo de nuevo.';
+    //     this.showError = true;
+    //     this.showErrorAlert = true; // Mostrar alerta de error
+    //     this.showSuccessAlert = false; // Ocultar alerta de éxito
+    //   }
 
-      this.isLoading = false; // Ocultar el loader
-    }, 2000);
+    //   this.isLoading = false; // Ocultar el loader
+    // }, 2000);
   }
 
   dismissError() {
