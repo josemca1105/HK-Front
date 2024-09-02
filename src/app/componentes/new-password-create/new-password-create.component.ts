@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { NgIf, CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-new-password-create',
@@ -10,10 +11,12 @@ import { NgIf, CommonModule } from '@angular/common';
   templateUrl: './new-password-create.component.html',
   styleUrls: ['./new-password-create.component.scss'],
 })
-export class NewPasswordCreateComponent {
+export class NewPasswordCreateComponent implements OnInit {
   password = '';
   confirmPassword = '';
   errorMessage = '';
+  uidb64: string = '';
+  token: string = '';
   focus = false;
   passwordFieldType: string = 'password';
   confirmPasswordFieldType: string = 'password';
@@ -21,7 +24,18 @@ export class NewPasswordCreateComponent {
   showAlert = false;
   alertFadeOut = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.uidb64 = params['uidb64'];
+      this.token = params['token'];
+    })
+  }
 
   setFocus(hasFocus: boolean) {
     this.focus = hasFocus;
@@ -73,6 +87,10 @@ export class NewPasswordCreateComponent {
   }
 
   createNewPassword() {
+    console.log('Password:', this.password);
+    console.log('Confirm Password:', this.confirmPassword);
+
+    // Validaciones previas
     if (!this.password || !this.confirmPassword) {
       this.errorMessage = 'Por favor, rellene todos los campos.';
       this.showError = true;
@@ -95,23 +113,25 @@ export class NewPasswordCreateComponent {
 
     this.showError = false;
     this.isLoading = true;
-    setTimeout(() => {
-      const isSuccess = Math.random() > 0.5;
 
-      if (isSuccess) {
-        console.log('Éxito');
-        this.showAlert = false;
-        this.router.navigate(['/login']);
-      } else {
-        this.errorMessage =
-          'Error al crear nueva contraseña. Inténtelo de nuevo.';
-        this.showError = true;
-        this.showAlert = true;
-      }
-
-      this.isLoading = false;
-    }, 2000);
-  }
+    // Llamar al servicio para restablecer la contraseña
+    this.authService.setNewPassword(this.uidb64, this.token, this.password, this.confirmPassword)
+      .subscribe({
+        next: (response) => {
+          console.log('Nueva contraseña creada exitosamente', response);
+          this.isLoading = false;
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        },
+        error: (error) => {
+          console.error('Error al crear nueva contraseña', error);
+          this.errorMessage = 'Error al crear nueva contraseña. Inténtelo de nuevo.';
+          this.showAlert = true;
+          this.isLoading = false;
+        },
+      });
+}
 
   dismissError() {
     this.alertFadeOut = true;
