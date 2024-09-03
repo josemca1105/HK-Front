@@ -44,14 +44,12 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/password-reset/${uidb64}/${token}`);
   }
 
-  // Método para restablecer la contraseña
-  setNewPassword(uidb64: string, token: string, password: string, confirmPassword: string): Observable<any> {
-    const data = {
-        uidb64,
-        token,
-        new_password: password,
-        confirm_password: confirmPassword
-    };
-    return this.http.patch(`${this.apiUrl}/password-reset-complete`, data);
+  // Método para establecer una nueva contraseña
+  setNewPassword(password: string, uidb64: string, token: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/password-reset-complete`, {
+      password,
+      uidb64,
+      token
+    });
   }
 }

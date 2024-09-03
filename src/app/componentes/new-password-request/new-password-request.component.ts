@@ -47,9 +47,6 @@ export class NewPasswordRequestComponent {
           this.showSuccessAlert = true; // Mostrar alerta de éxito
           this.showErrorAlert = false; // Ocultar alerta de error
           this.isLoading = false; // Ocultar el loader
-          setTimeout(() => {
-            this.router.navigate(['/create-new-password']); // Redirigir a la página de reestablecimiento de contraseña
-          }, 2000); // Tiempo de duración de la animación de salida
         },
         error: (error) => {
           console.error('Error al solicitar restablecimiento de contraseña', error);

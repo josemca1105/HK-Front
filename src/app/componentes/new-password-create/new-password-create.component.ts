@@ -31,10 +31,10 @@ export class NewPasswordCreateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.uidb64 = params['uidb64'];
-      this.token = params['token'];
-    })
+    this.uidb64 = this.route.snapshot.queryParams['uidb64'];
+    this.token = this.route.snapshot.queryParams['token'];
+    console.log('Token:', this.token);
+    console.log('Uidb64:', this.uidb64);
   }
 
   setFocus(hasFocus: boolean) {
@@ -114,24 +114,27 @@ export class NewPasswordCreateComponent implements OnInit {
     this.showError = false;
     this.isLoading = true;
 
-    // Llamar al servicio para restablecer la contraseña
-    this.authService.setNewPassword(this.uidb64, this.token, this.password, this.confirmPassword)
+    this.authService.setNewPassword(this.password, this.uidb64, this.token)
       .subscribe({
-        next: (response) => {
-          console.log('Nueva contraseña creada exitosamente', response);
+        next: () => {
           this.isLoading = false;
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 2000);
+          this.router.navigate(['/login']);
         },
         error: (error) => {
-          console.error('Error al crear nueva contraseña', error);
-          this.errorMessage = 'Error al crear nueva contraseña. Inténtelo de nuevo.';
-          this.showAlert = true;
-          this.isLoading = false;
-        },
+          if (error.status === 401) {
+            // Token is not valid, show an error message to the user
+            this.errorMessage = 'Token is not valid, please request a new one';
+            this.showError = true;
+            this.showAlert = true;
+          } else {
+            // Handle other errors
+            this.errorMessage = 'An error occurred, please try again later';
+            this.showError = true;
+            this.showAlert = true;
+          }
+        }
       });
-}
+  }
 
   dismissError() {
     this.alertFadeOut = true;
