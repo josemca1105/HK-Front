@@ -1,1 +1,57 @@
-<p>perfil-edit works!</p>
+<div *ngIf="user">
+  <div class="edit-profile-container">
+    <h2>Edit Profile</h2>
+
+    <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+      <div class="form-group">
+        <label for="f_name">First Name</label>
+        <input
+          type="text"
+          id="f_name"
+          name="f_name"
+          [(ngModel)]="user.f_name"
+          required
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="l_name">Last Name</label>
+        <input
+          type="text"
+          id="l_name"
+          name="l_name"
+          [(ngModel)]="user.l_name"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="user.email"
+          required
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input
+          type="text"
+          id="phone"
+          name="phone"
+          [(ngModel)]="user.phone"
+          class="form-control"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!profileForm.valid">
+        Update Profile
+      </button>
+    </form>
+  </div>
+</div>
