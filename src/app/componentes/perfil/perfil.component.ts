@@ -38,4 +38,9 @@ export class PerfilComponent {
       console.error('User ID is not available');
     }
   }
+
+  // Metodo para redirigir a la página de creacion de captaciones
+  createCaptacion(): void {
+    this.router.navigate(['/captaciones/create']);
+  }
 }

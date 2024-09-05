@@ -47,15 +47,15 @@ export const routes: Routes = [
         component: PerfilEditComponent,
       },
       {
-        path: 'admin/users-table',
+        path: 'admin/users/table',
         component: UsersTableComponent,
       },
       {
-        path: 'admin/users-create',
+        path: 'admin/users/create',
         component: UsersCreateComponent,
       },
       {
-        path: 'admin/users-edit/:id',
+        path: 'admin/users/edit/:id',
         component: UsersEditComponent,
       },
       {
@@ -63,19 +63,19 @@ export const routes: Routes = [
         component: CaptacionesComponent,
       },
       {
-        path: 'admin/captaciones-table',
+        path: 'admin/captaciones/table',
         component: CaptacionesAdminTableComponent,
       },
       {
-        path: 'admin/captaciones-edit/:id',
+        path: 'admin/captaciones/edit/:id',
         component: CaptacionesAdminEditComponent,
       },
       {
-        path: 'captaciones-create',
+        path: 'captaciones/create',
         component: CaptacionesPersonalCreateComponent,
       },
       {
-        path: 'captaciones-edit/:id',
+        path: 'captaciones/edit/:id',
         component: CaptacionesPersonalEditComponent,
       },
       {
