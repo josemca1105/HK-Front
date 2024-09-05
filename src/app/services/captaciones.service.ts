@@ -15,6 +15,21 @@ export class CaptacionesService {
     return this.http.get(`${this.apiUrl}`, { withCredentials: true });
   }
 
+  // Obtener una captacion
+  getCaptacion(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`, { withCredentials: true });
+  }
+
+  // Crear una captacion
+  createCaptacion(captacion: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}-create`, captacion, { withCredentials: true });
+  }
+
+  // Actualizar una captacion
+  updateCaptacion(captacion: any, id: number): Observable<any> {
+    return this.http.patch(`${this.apiUrl}-update/${id}`, captacion, { withCredentials: true });
+  }
+
   // Eliminar una captacion
   deleteCaptacion(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}-delete/${id}`, { withCredentials: true });
