@@ -1,16 +1,27 @@
-<nav>
-  <a routerLink="/inicio">Inicio</a>
-  <div *ngIf="user">
-    <span>Bienvenido, {{ user.f_name }}</span>
-    <a routerLink="/perfil">Perfil</a>
-    <button (click)="logout()">Logout</button>
+<nav class="font-poppins">
+  <!-- Menu principal -->
+  <div class="flex bg-[#20343d] justify-between items-center text-white px-6">
+    <a routerLink="/inicio" class="flex items-center justify-center">
+      <img src="./assets/logo.png" class="w-16 h-16" />
+      <span class="text-3xl font-semibold">Homekeys Liberty</span>
+    </a>
+    <div *ngIf="user">
+      <span>{{ user.f_name }}</span>
+      <a routerLink="/perfil">Perfil</a>
+      <button (click)="logout()">Logout</button>
+    </div>
+    <div *ngIf="!user" class="space-x-4">
+      <a routerLink="/login">Login</a>
+      <a routerLink="/register">Register</a>
+    </div>
   </div>
-  <div *ngIf="!user">
-    <a routerLink="/login">Login</a> <a routerLink="/register">Register</a>
+  <!-- Menu secundario -->
+  <div class="bg-[#3fc0dd] px-6 py-2 space-x-4">
+    <a routerLink="/users-table">Usuarios</a>
+    <a routerLink="/captaciones">Captaciones</a>
   </div>
-  <a routerLink="/users-table">tabla usuarios</a>
-  <a routerLink="/captaciones">captaciones</a>
-  <a routerLink="/captaciones-create">crear captaciones</a>
-  <a routerLink="/captaciones-admin-table">tabla captaciones</a>
+
+  <!--  <a routerLink="/captaciones-create">crear captaciones</a>
+  <a routerLink="/captaciones-admin-table">tabla captaciones</a> -->
 </nav>
 <router-outlet></router-outlet>
