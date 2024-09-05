@@ -36,18 +36,18 @@ export class CaptacionesAdminTableComponent {
     this.router.navigate(['/captaciones-admin-edit', id]);
   }
 
-  // deleteuser(id: number) {
-  //   this.captacionesService.deleteCaptacion(id)
-  //     .subscribe({
-  //       next: (response) => {
-  //         console.log('User deleted successfully', response);
-  //         this.loadUsers();
-  //       },
-  //       error: (error) => {
-  //         console.error('Error deleting user', error);
-  //       }
-  //     });
-  // }
+  deleteCaptacion(id: number) {
+    this.captacionesService.deleteCaptacion(id)
+      .subscribe({
+        next: (response) => {
+          console.log('Captacion deleted successfully', response);
+          this.loadCaptaciones();
+        },
+        error: (error) => {
+          console.error('Error deleting captacion', error);
+        }
+      })
+  }
 
   capitalizeFirstLetter(f_name: string): string {
     if (!f_name) return '';

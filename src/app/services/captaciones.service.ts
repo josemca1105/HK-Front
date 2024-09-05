@@ -14,4 +14,9 @@ export class CaptacionesService {
   getCaptaciones(): Observable<any> {
     return this.http.get(`${this.apiUrl}`, { withCredentials: true });
   }
+
+  // Eliminar una captacion
+  deleteCaptacion(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}-delete/${id}`, { withCredentials: true });
+  }
 }
