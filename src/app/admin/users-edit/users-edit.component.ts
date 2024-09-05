@@ -56,7 +56,7 @@ export class UsersEditComponent implements OnInit {
         .subscribe({
           next: (response) => {
             console.log('User updated', response);
-            this.router.navigate(['/users-table']);
+            this.router.navigate(['/admin/users/table']);
           },
           error: (error) => {
             console.error('Error updating user', error);

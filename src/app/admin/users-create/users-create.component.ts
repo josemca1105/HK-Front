@@ -29,7 +29,7 @@ export class UsersCreateComponent {
         next: (response) => {
           // faltaria el mensaje de usuario creado
           console.log('User created', response);
-          this.router.navigate(['/users-table']);
+          this.router.navigate(['/admin/users/table']);
         },
         error: (error) => {
           console.error('Error creating user', error);
