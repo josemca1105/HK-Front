@@ -36,11 +36,11 @@ export class UsersTableComponent implements OnInit {
   }
 
   editUser(id: number) {
-    this.router.navigate(['/users-edit', id]);
+    this.router.navigate(['/admin/users-edit', id]);
   }
 
   createuser() {
-    this.router.navigate(['/users-create']);
+    this.router.navigate(['/admin/users-create']);
   }
 
   deleteuser(id: number) {

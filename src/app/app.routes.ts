@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './componentes/login/login.component';
-import { RegisterComponent } from './componentes/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { Error404Component } from './componentes/error404/error404.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
@@ -22,7 +21,6 @@ export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
   {
     path: 'request-password',
     component: NewPasswordRequestComponent,
@@ -49,15 +47,15 @@ export const routes: Routes = [
         component: PerfilEditComponent,
       },
       {
-        path: 'users-create',
-        component: UsersCreateComponent,
-      },
-      {
-        path: 'users-table',
+        path: 'admin/users-table',
         component: UsersTableComponent,
       },
       {
-        path: 'users-edit/:id',
+        path: 'admin/users-create',
+        component: UsersCreateComponent,
+      },
+      {
+        path: 'admin/users-edit/:id',
         component: UsersEditComponent,
       },
       {
@@ -65,11 +63,11 @@ export const routes: Routes = [
         component: CaptacionesComponent,
       },
       {
-        path: 'captaciones-admin-table',
+        path: 'admin/captaciones-table',
         component: CaptacionesAdminTableComponent,
       },
       {
-        path: 'captaciones-admin-edit/:id',
+        path: 'admin/captaciones-edit/:id',
         component: CaptacionesAdminEditComponent,
       },
       {
