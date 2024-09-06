@@ -1,0 +1,51 @@
+<div class="modal-background">
+  <div class="modal-content">
+    <h1>Create User</h1>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="f_name">First Name:</label>
+        <input type="text" id="f_name" name="f_name" [(ngModel)]="user.f_name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="l_name">Last Name:</label>
+        <input type="text" id="l_name" name="l_name" [(ngModel)]="user.l_name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" [(ngModel)]="user.email" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" [(ngModel)]="user.password" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" [(ngModel)]="user.phone" class="form-control">
+      </div>
+      <button type="submit" class="bg-teal-600">Create User</button>
+      <button type="button" (click)="closeModal()">Close</button>
+    </form>
+  </div>
+</div>
+
+<style>
+  .modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+  }
+</style>
