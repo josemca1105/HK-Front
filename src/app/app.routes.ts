@@ -3,7 +3,6 @@ import { LoginComponent } from './componentes/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { Error404Component } from './componentes/error404/error404.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
-import { UsersCreateComponent } from './admin/users-create/users-create.component';
 import { UsersTableComponent } from './admin/users-table/users-table.component';
 import { UsersEditComponent } from './admin/users-edit/users-edit.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
@@ -49,10 +48,6 @@ export const routes: Routes = [
       {
         path: 'admin/users/table',
         component: UsersTableComponent,
-      },
-      {
-        path: 'admin/users/create',
-        component: UsersCreateComponent,
       },
       {
         path: 'admin/users/edit/:id',

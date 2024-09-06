@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { UsersCreateModalComponent } from '../users-create-modal/users-create-modal.component';
 
 @Component({
   selector: 'app-users-table',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, UsersCreateModalComponent, NgIf],
   templateUrl: './users-table.component.html',
   styleUrl: './users-table.component.scss'
 })
 export class UsersTableComponent implements OnInit {
   users: any[] = [];
+  isModalOpen = false;
 
   constructor(
     private usersService: UsersService,
@@ -39,8 +41,13 @@ export class UsersTableComponent implements OnInit {
     this.router.navigate(['/admin/users/edit', id]);
   }
 
-  createuser() {
-    this.router.navigate(['/admin/users/create']);
+  createUser() {
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.loadUsers();  // Recarga la tabla de usuarios cuando el modal se cierra
   }
 
   deleteuser(id: number) {

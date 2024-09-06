@@ -1,39 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { UsersService } from '../../services/users.service';
-import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-users-create',
+  selector: 'app-users-create-modal',
   standalone: true,
   imports: [NgIf, FormsModule],
-  templateUrl: './users-create.component.html',
-  styleUrl: './users-create.component.scss'
+  templateUrl: './users-create-modal.component.html',
+  styleUrl: './users-create-modal.component.scss'
 })
-export class UsersCreateComponent {
+export class UsersCreateModalComponent {
   user: any = {
     f_name: '',
     l_name: '',
     email: '',
     password: '',
     phone: '',
-    role: '',
   };
 
-  constructor(private usersService: UsersService, private router: Router) {}
+  @Output() close = new EventEmitter<void>();
+
+  constructor(private usersService: UsersService) {}
 
   onSubmit(): void {
     this.usersService.createUser(this.user)
       .subscribe({
         next: (response) => {
-          // faltaria el mensaje de usuario creado
           console.log('User created', response);
-          this.router.navigate(['/admin/users/table']);
+          this.closeModal();
         },
         error: (error) => {
           console.error('Error creating user', error);
         }
-      })
+      });
+  }
+
+  closeModal(): void {
+    this.close.emit(); // Emitimos el evento para notificar al componente padre
   }
 }

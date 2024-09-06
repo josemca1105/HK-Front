@@ -1,5 +1,5 @@
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <button class="font-medium text-green-600 dark:text-green-400" (click)="createuser()">Crear usuario</button>
+  <button class="font-medium text-green-600 dark:text-green-400" (click)="createUser()">Crear usuario</button>
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
@@ -26,3 +26,6 @@
     </tbody>
   </table>
 </div>
+
+<!-- Mostrar el modal si isModalOpen es true -->
+<app-users-create-modal *ngIf="isModalOpen" (close)="closeModal()"></app-users-create-modal>
