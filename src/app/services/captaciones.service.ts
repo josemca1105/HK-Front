@@ -20,6 +20,11 @@ export class CaptacionesService {
     return this.http.get(`${this.apiUrl}/${id}`, { withCredentials: true });
   }
 
+  // Obtener las captaciones de un usuario
+  getCaptacionesByUser(): Observable<any> {
+    return this.http.get(`${this.apiUrl}-personales`, { withCredentials: true });
+  }
+
   // Crear una captacion
   createCaptacion(captacion: any): Observable<any> {
     return this.http.post(`${this.apiUrl}-create`, captacion, { withCredentials: true });
