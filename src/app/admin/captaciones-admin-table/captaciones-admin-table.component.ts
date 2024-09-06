@@ -49,8 +49,8 @@ export class CaptacionesAdminTableComponent {
       })
   }
 
-  capitalizeFirstLetter(f_name: string): string {
-    if (!f_name) return '';
-    return f_name.charAt(0).toUpperCase() + f_name.slice(1).toLowerCase();
+  capitalizeFirstLetter(f_letter: string): string {
+    if (!f_letter) return '';
+    return f_letter.charAt(0).toUpperCase() + f_letter.slice(1).toLowerCase();
   }
 }
