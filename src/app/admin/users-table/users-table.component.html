@@ -1,27 +1,159 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-      <tr>
-        <th scope="col" class="px-6 py-3">Nombre</th>
-        <th scope="col" class="px-6 py-3">Apellido</th>
-        <th scope="col" class="px-6 py-3">Correo</th>
-        <th scope="col" class="px-6 py-3">Teléfono</th>
-        <th scope="col" class="px-6 py-3">Rol</th>
-        <th scope="col" class="px-6 py-3">Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ capitalizeFirstLetter(user.f_name) }}</th>
-        <th class="px-6 py-4">{{ capitalizeFirstLetter(user.l_name) }}</th>
-        <td class="px-6 py-4">{{ user.email }}</td>
-        <td class="px-6 py-4">{{ user.phone }}</td>
-        <td class="px-6 py-4">{{ capitalizeFirstLetter(user.role) }}</td>
-        <td class="px-6 py-4">
-          <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" (click)="editUser(user.id)">Editar</button>
-          <button class="font-medium text-red-600 dark:text-red-500 hover:underline" (click)="deleteuser(user.id)">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="px-6 sm:px-10">
+  <div class="flex items-start sm:items-center justify-between flex-col sm:flex-row space-y-2 my-6">
+    <h2 class="font-bold font-raleway text-2xl sm:text-3xl text-[#20343d]">
+      Tabla de usuarios
+    </h2>
+    <button
+      class="font-raleway font-semibold bg-[#EDD774] hover:bg-[#D4B03E] text-black px-6 py-3 rounded-lg transition duration-300 ease-in-out"
+      (click)="createUser()"
+    >
+      Crear usuario
+    </button>
+  </div>
+
+  <div class="overflow-x-auto shadow-lg rounded-lg">
+    <table class="w-full text-sm text-left text-[#20343d]">
+      <thead class="text-sm uppercase bg-[#3FC0DD] text-white font-raleway">
+        <tr>
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'f_name'"
+            (click)="sortTable('f_name')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'f_name'">Nombre</span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'l_name'"
+            (click)="sortTable('l_name')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'l_name'">Apellido</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+          <th scope="col" class="px-6 py-4 group">
+            <div class="flex items-center space-x-1">
+              <span>Correo</span>
+            </div>
+          </th>
+          <th scope="col" class="px-6 py-4 group">
+            <div class="flex items-center space-x-1">
+              <span>Teléfono</span>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'role'"
+            (click)="sortTable('role')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'role'">Rol</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+          <th scope="col" class="px-6 py-4">Acción</th>
+        </tr>
+      </thead>
+      <tbody class="font-poppins">
+        <tr
+          *ngFor="let user of users"
+          class="odd:bg-white even:bg-[#e6f3f7] border-b hover:bg-[#d1e8ee] transition duration-200"
+        >
+          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+            {{ capitalizeFirstLetter(user.f_name) }}
+          </th>
+          <td class="px-6 py-4 font-medium">
+            {{ capitalizeFirstLetter(user.l_name) }}
+          </td>
+          <td class="px-6 py-4">{{ user.email }}</td>
+          <td class="px-6 py-4">{{ user.phone }}</td>
+          <td class="px-6 py-4">{{ capitalizeFirstLetter(user.role) }}</td>
+          <td class="px-6 py-4">
+            <button
+              class="font-medium text-[#3FC0DD] hover:text-[#40697B] hover:underline mr-2"
+              (click)="editUser(user.id)"
+            >
+              Editar
+            </button>
+            <button
+              class="font-medium text-red-500 hover:text-red-600 hover:underline"
+              (click)="deleteuser(user.id)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<!-- Mostrar el modal si isModalOpen es true -->
+<app-users-create-modal
+  *ngIf="isCreateModalOpen"
+  (close)="closeCreateModal()"
+></app-users-create-modal>
+
+<!-- Mostrar el modal si isEditModalOpen es true -->
+<app-users-edit-modal
+  *ngIf="isEditModalOpen"
+  [userId]="selectedUserId"
+  (close)="closeEditModal()"
+></app-users-edit-modal>
+

@@ -1,1 +1,308 @@
-<p>captaciones-admin-table works!</p>
+<div class="px-6 sm:px-10">
+  <div
+    class="flex items-start sm:items-center justify-between flex-col sm:flex-row space-y-2 my-6"
+  >
+    <h2 class="font-bold font-raleway text-2xl sm:text-3xl text-[#20343d]">
+      Tabla de captaciones
+    </h2>
+    <button
+      class="font-raleway font-semibold bg-[#EDD774] hover:bg-[#D4B03E] text-black px-6 py-3 rounded-lg transition duration-300 ease-in-out"
+    >
+      Crear captación
+    </button>
+  </div>
+
+  <div class="overflow-x-auto shadow-lg rounded-lg">
+    <table class="w-full text-sm text-left text-[#20343d]">
+      <thead class="text-sm uppercase bg-[#3FC0DD] text-white font-raleway">
+        <tr>
+          <!-- Código -->
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'codigo'"
+            (click)="sortTable('codigo')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'codigo'">Código</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+
+          <!-- Asesor -->
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'asesor'"
+            (click)="sortTable('asesor')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'asesor'">Asesor</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+
+          <!-- Título -->
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'titulo'"
+            (click)="sortTable('titulo')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'titulo'">Título</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+
+          <!-- Estado -->
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'estado'"
+            (click)="sortTable('estado')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'estado'">Estado</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+
+          <!-- Ciudad -->
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'ciudad'"
+            (click)="sortTable('ciudad')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'ciudad'">Ciudad</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+
+          <!-- Dirección -->
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'direccion'"
+            (click)="sortTable('direccion')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'direccion'"
+                >Dirección</span
+              >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+
+          <!-- Disponibilidad -->
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'disponibilidad'"
+            (click)="sortTable('disponibilidad')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'disponibilidad'"
+                >Disponibilidad</span
+              >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+
+          <!-- Status -->
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'status'"
+            (click)="sortTable('status')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'status'">Status</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+
+          <!-- Acción -->
+          <th scope="col" class="px-6 py-4 text-center">
+            <span class="font-semibold">Acción</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="font-poppins">
+        <tr
+          *ngFor="let captacion of captaciones"
+          class="odd:bg-white even:bg-[#e6f3f7] border-b hover:bg-[#d1e8ee] transition duration-200"
+        >
+          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+            HK{{ captacion.codigo }}
+          </th>
+          <td class="px-6 py-4 font-medium">
+            {{ capitalizeFirstLetter(captacion.asesor.f_name) }}
+          </td>
+          <td class="px-6 py-4">
+            {{ capitalizeFirstLetter(captacion.titulo) }}
+          </td>
+          <td class="px-6 py-4">
+            {{ capitalizeFirstLetter(captacion.estado) }}
+          </td>
+          <td class="px-6 py-4">
+            {{ capitalizeFirstLetter(captacion.ciudad) }}
+          </td>
+          <td class="px-6 py-4">
+            {{ capitalizeFirstLetter(captacion.direccion) }}
+          </td>
+          <td class="px-6 py-4">{{ captacion.disponibilidad }}</td>
+          <td class="px-6 py-4">
+            {{ capitalizeFirstLetter(captacion.status) }}
+          </td>
+          <td class="px-6 py-4">{{ capitalizeFirstLetter(captacion.tipo) }}</td>
+          <td class="px-6 py-4">{{ captacion.precio }}</td>
+          <td class="px-6 py-4">
+            <button
+              class="font-medium text-[#3FC0DD] hover:text-[#40697B] hover:underline mr-2"
+              (click)="editCaptacion(captacion.codigo)"
+            >
+              Editar
+            </button>
+            <button
+              class="font-medium text-red-500 hover:text-red-600 hover:underline"
+              (click)="deleteCaptacion(captacion.codigo)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
