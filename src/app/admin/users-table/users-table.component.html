@@ -146,6 +146,14 @@
 
 <!-- Mostrar el modal si isModalOpen es true -->
 <app-users-create-modal
-  *ngIf="isModalOpen"
-  (close)="closeModal()"
+  *ngIf="isCreateModalOpen"
+  (close)="closeCreateModal()"
 ></app-users-create-modal>
+
+<!-- Mostrar el modal si isEditModalOpen es true -->
+<app-users-edit-modal
+  *ngIf="isEditModalOpen"
+  [userId]="selectedUserId"
+  (close)="closeEditModal()"
+></app-users-edit-modal>
+
