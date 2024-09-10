@@ -1,19 +1,187 @@
-<nav>
-  <a routerLink="/inicio">Inicio</a>
-  <div *ngIf="user">
-    <span>Bienvenido, {{ user.email }}</span>
-    <a routerLink="/perfil">Perfil</a>
-    <button (click)="logout()">Logout</button>
+<nav class="font-poppins">
+  <!-- Menu principal -->
+  <div class="flex bg-[#20343d] justify-between items-center text-white px-6">
+    <a routerLink="/inicio" class="flex items-center justify-center">
+      <img src="./assets/logo.png" class="w-16 h-16" />
+      <span class="hidden sm:block text-3xl font-semibold"
+        >Homekeys Liberty</span
+      >
+    </a>
+
+    <!-- Menú de usuario y opciones -->
+    <div *ngIf="user" class="hidden sm:flex relative">
+      <div
+        (click)="toggleDropdown()"
+        class="cursor-pointer flex items-center justify-center space-x-2"
+      >
+        <svg
+          class="w-8 h-8 text-[#d4b03e]"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <span>{{ user?.f_name }}</span>
+      </div>
+
+      <!-- Dropdown -->
+      <div
+        *ngIf="dropdownOpen"
+        class="absolute right-0 mt-9 w-32 bg-[#20343d] shadow-lg rounded-lg p-3 flex flex-col text-white"
+      >
+        <a
+          routerLink="/perfil"
+          class="hover:bg-[#3fc0dd] p-2 rounded text-center"
+          (click)="closeDropdown()"
+          >Perfil</a
+        >
+        <button
+          (click)="logout()"
+          class="hover:bg-[#3fc0dd] p-2 rounded text-center"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Menú de hamburguesa para pantallas pequeñas -->
+    <div class="sm:hidden">
+      <button (click)="toggleMenu()" class="text-[#d4b03e]">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 5.25h16.5m-16.5 7.5h16.5m-16.5 7.5h16.5"
+          />
+        </svg>
+      </button>
+
+      <!-- Menú desplegable con animación -->
+      <div
+        [class]="menuOpen ? 'menu-open' : 'menu-closed'"
+        class="font-poppins fixed inset-0 bg-[#20343d] z-50 flex flex-col justify-between p-6 transition-transform duration-500 transform"
+      >
+        <!-- Icono de cierre (X) -->
+        <div>
+          <div class="flex justify-end">
+            <button (click)="toggleMenu()" class="text-[#d4b03e]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="w-8 h-8"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="flex flex-col space-y-4 text-white">
+            <a
+              routerLink="/captaciones"
+              class="hover:bg-[#3fc0dd] p-2 rounded"
+              (click)="closeMenu()"
+              >Captaciones</a
+            >
+            <a
+              routerLink="/admin/users/table"
+              class="hover:bg-[#3fc0dd] p-2 rounded"
+              (click)="closeMenu()"
+              >Tabla de Usuarios</a
+            >
+            <a
+              routerLink="/admin/captaciones/table"
+              class="hover:bg-[#3fc0dd] p-2 rounded"
+              (click)="closeMenu()"
+              >Tabla de Captaciones</a
+            >
+          </div>
+        </div>
+
+        <!-- Sección de perfil y botón de logout -->
+        <div class="flex items-center justify-between text-white">
+          <div class="flex items-center space-x-2">
+            <svg
+              class="w-8 h-8 text-[#d4b03e]"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span>{{ user.f_name }}</span>
+          </div>
+          <button (click)="logout()" class="text-[#d4b03e]">
+            <svg
+              class="w-6 h-6 text-[#d4b03e]"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div *ngIf="!user">
-    <a routerLink="/login">Login</a>
-    <a routerLink="/register">Register</a>
+  <!-- Menu secundario -->
+  <div class="hidden sm:block bg-[#3fc0dd] px-6 py-2 space-x-4">
+    <a routerLink="/captaciones">Captaciones</a>
+    <a routerLink="/admin/users/table">Tabla de Usuarios</a>
+    <a routerLink="/admin/captaciones/table">Tabla de Captaciones</a>
   </div>
-  <a routerLink="/users-table">tabla usuarios</a>
-  <a routerLink="/users-create">crear usuarios</a>
-  <a routerLink="/captaciones">captaciones</a>
-  <a routerLink="/captaciones-create">crear captaciones</a>
-  <a routerLink="/captaciones-admin-table">tabla captaciones</a>
 </nav>
 
 <router-outlet></router-outlet>
+
+<style>
+  .menu-open {
+    transform: translateX(0);
+  }
+
+  .menu-closed {
+    transform: translateX(100%);
+  }
+
+  .fixed {
+    transition: transform 0.5s ease;
+  }
+</style>

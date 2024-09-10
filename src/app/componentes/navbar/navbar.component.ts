@@ -8,15 +8,14 @@ import { NgIf } from '@angular/common';
   standalone: true,
   imports: [RouterLink, RouterOutlet, NgIf],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  user: any = null;
+  user: any = {};
+  dropdownOpen: boolean = false; // Controla la visibilidad del dropdown
+  menuOpen: boolean = false; // Controla la visibilidad del menú de hamburguesa
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.authService.getUser().subscribe({
@@ -26,8 +25,16 @@ export class NavbarComponent {
       },
       error: (error) => {
         console.error('Failed to get user', error);
-      }
+      },
     });
+  }
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen; // Alterna el estado del dropdown
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen; // Alterna el estado del menú de hamburguesa
   }
 
   logout() {
@@ -35,11 +42,23 @@ export class NavbarComponent {
       next: (response) => {
         console.log('Logout successful', response);
         this.user = null;
+        this.dropdownOpen = false;
+        this.menuOpen = false; // Cierra el menú al cerrar sesión
         this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Logout failed', error);
-      }
+      },
     });
+  }
+
+  closeDropdown() {
+    setTimeout(() => {
+      this.dropdownOpen = false; // Cierra el dropdown después de un breve retraso
+    }, 500);
+  }
+
+  closeMenu(): void {
+    this.menuOpen = false; // Cierra el menú al hacer clic en un enlace
   }
 }

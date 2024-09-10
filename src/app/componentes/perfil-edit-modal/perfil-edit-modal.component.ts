@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../services/users.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { UsersService } from '../../services/users.service';
 import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-perfil-edit',
+  selector: 'app-perfil-edit-modal',
   standalone: true,
   imports: [FormsModule, NgIf],
-  templateUrl: './perfil-edit.component.html',
-  styleUrls: ['./perfil-edit.component.scss']
+  templateUrl: './perfil-edit-modal.component.html',
+  styleUrl: './perfil-edit-modal.component.scss'
 })
-export class PerfilEditComponent implements OnInit {
+export class PerfilEditModalComponent implements OnInit {
+  @Input() userId: number | null = null;
+  @Output() close = new EventEmitter<void>();
   user: any = {
     id: null,
     f_name: '',
@@ -20,20 +21,11 @@ export class PerfilEditComponent implements OnInit {
     phone: '',
   };
 
-  constructor(
-    private usersService: UsersService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
-    // Obtener el id del usuario desde la URL
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.loadUser(+id); // Cargar usuario por id
-    } else {
-      // Manejar caso cuando no se proporciona un id
-      console.error('User ID is missing');
+    if (this.userId) {
+      this.loadUser(this.userId);
     }
   }
 
@@ -41,7 +33,7 @@ export class PerfilEditComponent implements OnInit {
     this.usersService.getUser(id).subscribe({
       next: (response) => {
         console.log('User data:', response);
-        this.user = response.data; // Accede al campo `data` de la respuesta
+        this.user = response.data;
       },
       error: (error) => {
         console.error('Error loading user data', error);
@@ -54,7 +46,7 @@ export class PerfilEditComponent implements OnInit {
       this.usersService.updateUser(this.user, this.user.id).subscribe({
         next: (response) => {
           console.log('Profile updated', response);
-          this.router.navigate(['/perfil']); // Redirige a la página del perfil
+          this.close.emit();
         },
         error: (error) => {
           console.error('Error updating profile', error);
@@ -63,5 +55,9 @@ export class PerfilEditComponent implements OnInit {
     } else {
       console.error('User ID is not available for update');
     }
+  }
+
+  onClose(): void {
+    this.close.emit();
   }
 }

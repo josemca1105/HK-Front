@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CaptacionesService } from '../../services/captaciones.service';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-captaciones-admin-table',
   standalone: true,
-  imports: [],
+  imports: [NgFor],
   templateUrl: './captaciones-admin-table.component.html',
   styleUrl: './captaciones-admin-table.component.scss',
 })

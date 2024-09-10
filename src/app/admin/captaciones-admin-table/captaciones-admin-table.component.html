@@ -305,4 +305,42 @@
       </tbody>
     </table>
   </div>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <!-- <button class="font-medium text-green-600 dark:text-green-400" (click)="createuser()">Crear usuario</button> -->
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">Codigo</th>
+        <th scope="col" class="px-6 py-3">Asesor</th>
+        <th scope="col" class="px-6 py-3">Titulo</th>
+        <th scope="col" class="px-6 py-3">Estado</th>
+        <th scope="col" class="px-6 py-3">Ciudad</th>
+        <th scope="col" class="px-6 py-3">Direccion</th>
+        <th scope="col" class="px-6 py-3">Disponibilidad</th>
+        <th scope="col" class="px-6 py-3">Status</th>
+        <th scope="col" class="px-6 py-3">Tipo</th>
+        <th scope="col" class="px-6 py-3">Precio</th>
+        <th scope="col" class="px-6 py-3">Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let captacion of captaciones" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <th class="px-6 py-4">HK{{ captacion.codigo }}</th>
+        <td class="px-6 py-4">{{ capitalizeFirstLetter(captacion.asesor.f_name) }}</td>
+        <td class="px-6 py-4">{{ capitalizeFirstLetter(captacion.titulo) }}</td>
+        <td class="px-6 py-4">{{ capitalizeFirstLetter(captacion.estado) }}</td>
+        <td class="px-6 py-4">{{ capitalizeFirstLetter(captacion.ciudad) }}</td>
+        <td class="px-6 py-4">{{ capitalizeFirstLetter(captacion.direccion) }}</td>
+        <td class="px-6 py-4">{{ capitalizeFirstLetter(captacion.disponibilidad) }}</td>
+        <td class="px-6 py-4">{{ capitalizeFirstLetter(captacion.status) }}</td>
+        <td class="px-6 py-4">{{ capitalizeFirstLetter(captacion.tipo) }}</td>
+        <td class="px-6 py-4">{{ captacion.precio }}</td>
+        <td class="px-6 py-4">
+          <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" (click)="editCaptacion(captacion.id)">Editar</button>
+          <button class="font-medium text-red-600 dark:text-red-500 hover:underline" (click)="deleteCaptacion(captacion.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
