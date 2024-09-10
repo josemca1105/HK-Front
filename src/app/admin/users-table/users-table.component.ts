@@ -3,17 +3,20 @@ import { UsersService } from '../../services/users.service';
 import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { UsersCreateModalComponent } from '../users-create-modal/users-create-modal.component';
+import { UsersEditModalComponent } from '../users-edit-modal/users-edit-modal.component';
 
 @Component({
   selector: 'app-users-table',
   standalone: true,
-  imports: [NgFor, UsersCreateModalComponent, NgIf],
+  imports: [NgFor, UsersCreateModalComponent, UsersEditModalComponent, NgIf],
   templateUrl: './users-table.component.html',
   styleUrl: './users-table.component.scss',
 })
 export class UsersTableComponent implements OnInit {
   users: any[] = [];
-  isModalOpen = false;
+  isCreateModalOpen = false;
+  isEditModalOpen = false;
+  selectedUserId: number | null = null;
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
@@ -55,16 +58,22 @@ export class UsersTableComponent implements OnInit {
     });
   }
 
-  editUser(id: number) {
-    this.router.navigate(['/admin/users/edit', id]);
+  editUser(id: number): void {
+    this.selectedUserId = id; // Guardamos el ID del usuario seleccionado
+    this.isEditModalOpen = true; // Abrimos el modal de edición
   }
 
   createUser() {
-    this.isModalOpen = true;
+    this.isCreateModalOpen = true;
   }
 
-  closeModal(): void {
-    this.isModalOpen = false;
+  closeCreateModal(): void {
+    this.isCreateModalOpen = false;
+    this.loadUsers(); // Recarga la tabla de usuarios cuando el modal se cierra
+  }
+
+  closeEditModal(): void {
+    this.isEditModalOpen = false;
     this.loadUsers(); // Recarga la tabla de usuarios cuando el modal se cierra
   }
 

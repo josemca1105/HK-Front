@@ -11,7 +11,7 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  user: any = null;
+  user: any = {};
   dropdownOpen: boolean = false; // Controla la visibilidad del dropdown
   menuOpen: boolean = false; // Controla la visibilidad del menú de hamburguesa
 
