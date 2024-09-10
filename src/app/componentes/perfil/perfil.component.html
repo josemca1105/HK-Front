@@ -50,3 +50,9 @@
   </div>
 
 </div>
+
+<app-perfil-edit-modal
+  *ngIf="isEditModalOpen"
+  [userId]="userId"
+  (close)="closeEditModal()"
+></app-perfil-edit-modal>

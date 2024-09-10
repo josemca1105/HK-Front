@@ -40,6 +40,7 @@
         <a
           routerLink="/perfil"
           class="hover:bg-[#3fc0dd] p-2 rounded text-center"
+          (click)="closeDropdown()"
           >Perfil</a
         >
         <button
@@ -98,12 +99,22 @@
 
           <div class="flex flex-col space-y-4 text-white">
             <a
+              routerLink="/captaciones"
+              class="hover:bg-[#3fc0dd] p-2 rounded"
+              (click)="closeMenu()"
+              >Captaciones</a
+            >
+            <a
               routerLink="/admin/users/table"
               class="hover:bg-[#3fc0dd] p-2 rounded"
-              >Usuarios</a
+              (click)="closeMenu()"
+              >Tabla de Usuarios</a
             >
-            <a routerLink="/captaciones" class="hover:bg-[#3fc0dd] p-2 rounded"
-              >Captaciones</a
+            <a
+              routerLink="/admin/captaciones/table"
+              class="hover:bg-[#3fc0dd] p-2 rounded"
+              (click)="closeMenu()"
+              >Tabla de Captaciones</a
             >
           </div>
         </div>
@@ -153,8 +164,9 @@
   </div>
   <!-- Menu secundario -->
   <div class="hidden sm:block bg-[#3fc0dd] px-6 py-2 space-x-4">
-    <a routerLink="/admin/users/table">Usuarios</a>
     <a routerLink="/captaciones">Captaciones</a>
+    <a routerLink="/admin/users/table">Tabla de Usuarios</a>
+    <a routerLink="/admin/captaciones/table">Tabla de Captaciones</a>
   </div>
 </nav>
 

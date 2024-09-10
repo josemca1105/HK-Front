@@ -4,7 +4,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { Error404Component } from './componentes/error404/error404.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { UsersTableComponent } from './admin/users-table/users-table.component';
-import { UsersEditComponent } from './admin/users-edit/users-edit.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { PerfilEditComponent } from './componentes/perfil-edit/perfil-edit.component';
 import { CaptacionesComponent } from './componentes/captaciones/captaciones.component';
@@ -48,10 +47,6 @@ export const routes: Routes = [
       {
         path: 'admin/users/table',
         component: UsersTableComponent,
-      },
-      {
-        path: 'admin/users/edit/:id',
-        component: UsersEditComponent,
       },
       {
         path: 'captaciones',

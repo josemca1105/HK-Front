@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { NgFor, NgIf } from '@angular/common';
-import { Router } from '@angular/router';
 import { UsersCreateModalComponent } from '../users-create-modal/users-create-modal.component';
 import { UsersEditModalComponent } from '../users-edit-modal/users-edit-modal.component';
 
@@ -40,7 +39,7 @@ export class UsersTableComponent implements OnInit {
     });
   }
 
-  constructor(private usersService: UsersService, private router: Router) {}
+  constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
     this.loadUsers();

@@ -51,4 +51,14 @@ export class NavbarComponent {
       },
     });
   }
+
+  closeDropdown() {
+    setTimeout(() => {
+      this.dropdownOpen = false; // Cierra el dropdown después de un breve retraso
+    }, 500);
+  }
+
+  closeMenu(): void {
+    this.menuOpen = false; // Cierra el menú al hacer clic en un enlace
+  }
 }
