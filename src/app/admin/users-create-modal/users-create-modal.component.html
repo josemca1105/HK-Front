@@ -33,23 +33,23 @@
       [ngClass]="{ 'fade-out': alertFadeOut }"
     >
       <p class="font-poppins text-red-500">{{ errorMessage }}</p>
-      <button class= "text-red-500 hover:text-red-600" (click)="dismissError()">
+      <button class="text-red-500 hover:text-red-600" (click)="dismissError()">
         <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="lucide lucide-x"
-      >
-        <path d="M18 6 6 18" />
-        <path d="m6 6 12 12" />
-      </svg>
-    </button>
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-x"
+        >
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
     </div>
 
     <form (ngSubmit)="onSubmit()">
@@ -63,8 +63,18 @@
             [(ngModel)]="user.f_name"
             class="pl-10 text-black w-full bg-transparent placeholder-black border-0 border-b-2 focus:ring-0 focus:border-[#3FC0DD] focus:outline-none focus:transition-colors focus:duration-300"
             placeholder="Nombre"
+            [ngClass]="{
+              'border-red-500': !user.f_name && showError,
+              'border-black': user.f_name || !showError
+            }"
           />
-          <i class="absolute left-2 top-1/2 transform -translate-y-1/2">
+          <i
+            class="absolute left-2 top-1/2 transform -translate-y-1/2"
+            [ngClass]="{
+              'text-red-500': !user.f_name && showError,
+              'text-black': user.f_name || !showError
+            }"
+          >
             <!-- SVG del ícono -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -95,8 +105,18 @@
             [(ngModel)]="user.l_name"
             class="pl-10 text-black w-full bg-transparent placeholder-black border-0 border-b-2 focus:ring-0 focus:border-[#3FC0DD] focus:outline-none focus:transition-colors focus:duration-300"
             placeholder="Apellido"
+            [ngClass]="{
+              'border-red-500': !user.l_name && showError,
+              'border-black': user.l_name || !showError
+            }"
           />
-          <i class="absolute left-2 top-1/2 transform -translate-y-1/2">
+          <i
+            class="absolute left-2 top-1/2 transform -translate-y-1/2"
+            [ngClass]="{
+              'text-red-500': !user.l_name && showError,
+              'text-black': user.l_name || !showError
+            }"
+          >
             <!-- SVG del ícono -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -127,8 +147,18 @@
             [(ngModel)]="user.email"
             class="pl-10 text-black w-full bg-transparent placeholder-black border-0 border-b-2 focus:ring-0 focus:border-[#3FC0DD] focus:outline-none focus:transition-colors focus:duration-300"
             placeholder="Correo electrónico"
+            [ngClass]="{
+              'border-red-500': !user.email && showError,
+              'border-black': user.email || !showError
+            }"
           />
-          <i class="absolute left-2 top-1/2 transform -translate-y-1/2">
+          <i
+            class="absolute left-2 top-1/2 transform -translate-y-1/2"
+            [ngClass]="{
+              'text-red-500': !user.email && showError,
+              'text-black': user.email || !showError
+            }"
+          >
             <!-- SVG del ícono -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -156,8 +186,18 @@
             [(ngModel)]="user.phone"
             class="pl-10 text-black w-full bg-transparent placeholder-black border-0 border-b-2 focus:ring-0 focus:border-[#3FC0DD] focus:outline-none focus:transition-colors focus:duration-300"
             placeholder="Teléfono"
+            [ngClass]="{
+              'border-red-500': !user.phone && showError,
+              'border-black': user.phone || !showError
+            }"
           />
-          <i class="absolute left-2 top-1/2 transform -translate-y-1/2">
+          <i
+            class="absolute left-2 top-1/2 transform -translate-y-1/2"
+            [ngClass]="{
+              'text-red-500': !user.phone && showError,
+              'text-black': user.phone || !showError
+            }"
+          >
             <!-- SVG del ícono -->
             <svg
               xmlns="http://www.w3.org/2000/svg"

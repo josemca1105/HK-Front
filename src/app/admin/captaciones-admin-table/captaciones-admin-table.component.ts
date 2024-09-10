@@ -8,28 +8,51 @@ import { NgFor } from '@angular/common';
   standalone: true,
   imports: [NgFor],
   templateUrl: './captaciones-admin-table.component.html',
-  styleUrl: './captaciones-admin-table.component.scss'
+  styleUrl: './captaciones-admin-table.component.scss',
 })
 export class CaptacionesAdminTableComponent {
-  captaciones: any[] = [];
 
-  constructor(private captacionesService: CaptacionesService, private router: Router) {}
+  captaciones: any[] = [];
+  sortColumn: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
+  constructor(
+    private captacionesService: CaptacionesService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadCaptaciones();
   }
 
   loadCaptaciones() {
-    this.captacionesService.getCaptaciones()
-      .subscribe({
-        next: (response) => {
-          console.log('Captaciones fetched successfully', response);
-          this.captaciones = response;
-        },
-        error: (error) => {
-          console.error('Error getting captaciones', error);
-        }
-      });
+    this.captacionesService.getCaptaciones().subscribe({
+      next: (response) => {
+        console.log('Captaciones fetched successfully', response);
+        this.captaciones = response;
+      },
+      error: (error) => {
+        console.error('Error getting captaciones', error);
+      },
+    });
+  }
+
+  sortTable(column: string): void {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+
+    this.captaciones.sort((a, b) => {
+      const valueA = a[column];
+      const valueB = b[column];
+
+      if (valueA < valueB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valueA > valueB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
   }
 
   editCaptacion(id: number) {
@@ -37,16 +60,15 @@ export class CaptacionesAdminTableComponent {
   }
 
   deleteCaptacion(id: number) {
-    this.captacionesService.deleteCaptacion(id)
-      .subscribe({
-        next: (response) => {
-          console.log('Captacion deleted successfully', response);
-          this.loadCaptaciones();
-        },
-        error: (error) => {
-          console.error('Error deleting captacion', error);
-        }
-      })
+    this.captacionesService.deleteCaptacion(id).subscribe({
+      next: (response) => {
+        console.log('Captacion deleted successfully', response);
+        this.loadCaptaciones();
+      },
+      error: (error) => {
+        console.error('Error deleting captacion', error);
+      },
+    });
   }
 
   capitalizeFirstLetter(f_letter: string): string {
