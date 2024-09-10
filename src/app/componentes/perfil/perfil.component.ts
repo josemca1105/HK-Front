@@ -2,17 +2,20 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CaptacionesService } from '../../services/captaciones.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { PerfilEditModalComponent } from '../perfil-edit-modal/perfil-edit-modal.component';
+
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, PerfilEditModalComponent, NgIf],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent {
   userId: number | null = null;
   captaciones: any[] = [];
+  isEditModalOpen = false;
 
   constructor(
     private router: Router,
@@ -40,7 +43,8 @@ export class PerfilComponent {
   // Método para redirigir a la página de edición del perfil
   editProfile(): void {
     if (this.userId !== null) {
-      this.router.navigate(['/perfil-edit', this.userId]);
+      this.userId = this.userId;
+      this.isEditModalOpen = true;
     } else {
       console.error('User ID is not available');
     }
@@ -92,5 +96,10 @@ export class PerfilComponent {
   capitalizeFirstLetter(f_letter: string): string {
     if (!f_letter) return '';
     return f_letter.charAt(0).toUpperCase() + f_letter.slice(1).toLowerCase();
+  }
+
+  // Metodo para cerrar el modal de edición
+  closeEditModal(): void {
+    this.isEditModalOpen = false;
   }
 }
