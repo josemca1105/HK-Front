@@ -157,3 +157,10 @@
   (close)="closeEditModal()"
 ></app-users-edit-modal>
 
+<!-- Modal de eliminación -->
+<app-users-delete-modal
+  *ngIf="isDeleteModalOpen"
+  [userId]="selectedUserId"
+  (close)="closeDeleteModal()"
+  (userDeleted)="loadUsers()"
+></app-users-delete-modal>

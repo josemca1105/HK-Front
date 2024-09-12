@@ -3,11 +3,12 @@ import { UsersService } from '../../services/users.service';
 import { NgFor, NgIf } from '@angular/common';
 import { UsersCreateModalComponent } from '../users-create-modal/users-create-modal.component';
 import { UsersEditModalComponent } from '../users-edit-modal/users-edit-modal.component';
+import { UsersDeleteModalComponent } from '../users-delete-modal/users-delete-modal.component';
 
 @Component({
   selector: 'app-users-table',
   standalone: true,
-  imports: [NgFor, UsersCreateModalComponent, UsersEditModalComponent, NgIf],
+  imports: [NgFor, UsersCreateModalComponent, UsersEditModalComponent, UsersDeleteModalComponent, NgIf],
   templateUrl: './users-table.component.html',
   styleUrl: './users-table.component.scss',
 })
@@ -15,6 +16,7 @@ export class UsersTableComponent implements OnInit {
   users: any[] = [];
   isCreateModalOpen = false;
   isEditModalOpen = false;
+  isDeleteModalOpen = false;
   selectedUserId: number | null = null;
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
@@ -66,6 +68,11 @@ export class UsersTableComponent implements OnInit {
     this.isCreateModalOpen = true;
   }
 
+  deleteuser(id: number) {
+    this.selectedUserId = id; // Guardamos el ID del usuario seleccionado
+    this.isDeleteModalOpen = true; // Abrimos el modal de eliminación
+  }
+
   closeCreateModal(): void {
     this.isCreateModalOpen = false;
     this.loadUsers(); // Recarga la tabla de usuarios cuando el modal se cierra
@@ -76,16 +83,9 @@ export class UsersTableComponent implements OnInit {
     this.loadUsers(); // Recarga la tabla de usuarios cuando el modal se cierra
   }
 
-  deleteuser(id: number) {
-    this.usersService.deleteUser(id).subscribe({
-      next: (response) => {
-        console.log('User deleted successfully', response);
-        this.loadUsers();
-      },
-      error: (error) => {
-        console.error('Error deleting user', error);
-      },
-    });
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+    this.loadUsers(); // Recarga la tabla de usuarios cuando el modal se cierra
   }
 
   capitalizeFirstLetter(f_name: string): string {
