@@ -40,11 +40,13 @@ export class AuthService {
   }
 
   // Method to set new password
-  async setNewPassword(password: string, uidb64: string, token: string): Promise<any> {
-    return this.axiosService.patch(`${this.apiUrl}/password-reset-complete`, {
-      password,
-      uidb64,
-      token
-    });
+  async setNewPassword(uidb64: string, token: string, password: string): Promise<any> {
+    const resetData = {
+      uidb64: uidb64,
+      token: token,
+      password: password,
+    };
+
+    return this.axiosService.patch(`${this.apiUrl}/password-reset-complete`, resetData);
   }
 }
