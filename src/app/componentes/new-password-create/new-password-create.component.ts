@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { NgIf, CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-new-password-create',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIf, RouterLink],
+  imports: [CommonModule, FormsModule, NgIf, RouterLink, ReactiveFormsModule],
   templateUrl: './new-password-create.component.html',
   styleUrls: ['./new-password-create.component.scss'],
 })
@@ -17,6 +17,7 @@ export class NewPasswordCreateComponent implements OnInit {
   errorMessage = '';
   uidb64: string = '';
   token: string = '';
+  resetForm: FormGroup;
   focus = false;
   passwordFieldType: string = 'password';
   confirmPasswordFieldType: string = 'password';
@@ -28,12 +29,18 @@ export class NewPasswordCreateComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {
+    this.resetForm = this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
+      password2: ['', [Validators.required]]
+    });
+  }
 
   ngOnInit(): void {
-    this.uidb64 = this.route.snapshot.queryParams['uidb64'];
-    this.token = this.route.snapshot.queryParams['token'];
+    this.uidb64 = this.route.snapshot.params['uidb64'];
+    this.token = this.route.snapshot.params['token'];
     console.log('Token:', this.token);
     console.log('Uidb64:', this.uidb64);
   }
@@ -114,9 +121,19 @@ export class NewPasswordCreateComponent implements OnInit {
     this.isLoading = true;
 
     try {
-      await this.authService.setNewPassword(this.password, this.uidb64, this.token);
+      const resetData = {
+        uidb64: this.uidb64,
+        token: this.token,
+        password: this.password // Asegúrate de que el campo password está presente y tiene un valor
+      };
+      console.log('Datos enviados:', resetData); // Verifica los datos enviados
+
+      const response = await this.authService.setNewPassword(this.uidb64, this.token, this.password);
+      console.log('Response:', response);
       this.isLoading = false;
-      this.router.navigate(['/login']);
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 2000);
     } catch (error: any) {
       this.isLoading = false;
       if (error.response && error.response.status === 401) {
