@@ -34,7 +34,7 @@ export class LoginComponent {
 
   public showError: boolean = false;
 
-  login() {
+  async login() {
     if (!this.email || !this.password) {
       this.errorMessage = 'Por favor, rellene todos los campos.';
       this.showError = true;
@@ -44,20 +44,16 @@ export class LoginComponent {
 
     this.showError = false;
     this.isLoading = true; // Mostrar el loader
-    this.authService
-      .login({ email: this.email, password: this.password })
-      .subscribe({
-        next: (response) => {
-          console.log('Login successful', response);
-          this.router.navigate(['/inicio']);
-        },
-        error: (error) => {
-          this.errorMessage = 'Error al iniciar sesión. Inténtelo de nuevo.';
-          this.showError = true;
-          this.showAlert = true; // Mostrar alerta
-          this.isLoading = false; // Ocultar el loader
-        }
-      });
+    try {
+      const response = await this.authService.login({ email: this.email, password: this.password });
+      console.log('Login successfull', response);
+      this.isLoading = false; // Estado para el loader
+      this.router.navigate(['/inicio']); // Redirigir a inicio
+    } catch (error) {
+      this.errorMessage = 'Credenciales incorrectas. Por favor, inténtelo de nuevo.';
+      this.showError = true;
+      this.showAlert = true; // Mostrar alerta
+    }
   }
 
   dismissError() {

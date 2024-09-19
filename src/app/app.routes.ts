@@ -20,11 +20,11 @@ export const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
   {
-    path: 'request-password',
+    path: 'reestablecer-clave',
     component: NewPasswordRequestComponent,
   },
   {
-    path: 'create-new-password',
+    path: 'reestablecer-clave/:uidb64/:token',
     component: NewPasswordCreateComponent,
   },
 

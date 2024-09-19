@@ -24,7 +24,7 @@ export class NewPasswordRequestComponent {
 
   constructor(private router: Router, private authService: AuthService) {}
 
-  requestPassword() {
+  async requestPassword() {
     if (!this.email) {
       this.errorMessage =
         'Por favor, ingrese su correo electrónico para proceder.';
@@ -39,24 +39,41 @@ export class NewPasswordRequestComponent {
     this.isLoading = true; // Mostrar el loader
 
     // Llamar al servicio de autenticación para solicitar el restablecimiento de la contraseña
-    this.authService.requestPasswordReset(this.email)
-      .subscribe({
-        next: (response) => {
-          console.log('Solicitud de restablecimiento de contraseña exitosa', response);
-          this.successMessage = 'Éxito: Se ha enviado el enlace de recuperación.';
-          this.showSuccessAlert = true; // Mostrar alerta de éxito
-          this.showErrorAlert = false; // Ocultar alerta de error
-          this.isLoading = false; // Ocultar el loader
-        },
-        error: (error) => {
-          console.error('Error al solicitar restablecimiento de contraseña', error);
-          this.errorMessage =
-            'Error: No se pudo enviar el enlace. Inténtelo de nuevo.';
-          this.showError = true;
-          this.showErrorAlert = true; // Mostrar alerta de error
-          this.showSuccessAlert = false; // Ocultar alerta de éxito
-        }
-      })
+    try {
+      const response = await this.authService.requestPasswordReset(this.email);
+      console.log('Solicitud de restablecimiento de contraseña exitosa', response);
+      this.successMessage = 'Éxito: Se ha enviado el enlace de recuperación.';
+      this.showSuccessAlert = true; // Mostrar alerta de éxito
+      this.showErrorAlert = false; // Ocultar alerta de error
+      this.isLoading = false; // Ocultar el loader
+    } catch (error) {
+      console.error('Error al solicitar restablecimiento de contraseña', error);
+      this.errorMessage =
+        'Error: No se pudo enviar el enlace. Inténtelo de nuevo.';
+      this.showError = true;
+      this.showErrorAlert = true; // Mostrar alerta de error
+      this.showSuccessAlert = false; // Ocultar alerta de éxito
+    } finally {
+      this.isLoading = false;
+    }
+    // this.authService.requestPasswordReset(this.email)
+    //   .subscribe({
+    //     next: (response) => {
+    //       console.log('Solicitud de restablecimiento de contraseña exitosa', response);
+    //       this.successMessage = 'Éxito: Se ha enviado el enlace de recuperación.';
+    //       this.showSuccessAlert = true; // Mostrar alerta de éxito
+    //       this.showErrorAlert = false; // Ocultar alerta de error
+    //       this.isLoading = false; // Ocultar el loader
+    //     },
+    //     error: (error) => {
+    //       console.error('Error al solicitar restablecimiento de contraseña', error);
+    //       this.errorMessage =
+    //         'Error: No se pudo enviar el enlace. Inténtelo de nuevo.';
+    //       this.showError = true;
+    //       this.showErrorAlert = true; // Mostrar alerta de error
+    //       this.showSuccessAlert = false; // Ocultar alerta de éxito
+    //     }
+    //   })
     // Simulación de respuesta exitosa o fallida después de 2 segundos
     // setTimeout(() => {
     //   const isSuccess = Math.random() > 0.5; // Simulación aleatoria de éxito o fallo

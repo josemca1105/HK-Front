@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { AxiosService } from './axios.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,45 +7,41 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:8000/api';
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private axiosService: AxiosService) { }
 
-  // Métodos para la autenticación de usuarios
-
-  // Método para registrar un nuevo usuario
-  register(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData);
+  // Method to register a new user
+  async register(userData: any): Promise<any> {
+    return this.axiosService.post(`${this.apiUrl}/register`, userData);
   }
 
-  // Método para iniciar sesión
-  login(credentials: { email: string, password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials, { withCredentials: true });
+  // Method to login
+  async login(credentials: { email: string, password: string }): Promise<any> {
+    return this.axiosService.post(`${this.apiUrl}/login`, credentials);
   }
 
-  // Método para obtener los datos del usuario autenticado
-  getUser(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/auth`, { withCredentials: true });
+  // Method to get authenticated user data
+  async getUser(): Promise<any> {
+    return this.axiosService.get(`${this.apiUrl}/auth`);
   }
 
-  // Método para cerrar sesión
-  logout(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true });
+  // Method to logout
+  async logout(): Promise<any> {
+    return this.axiosService.post(`${this.apiUrl}/logout`, {});
   }
 
-  // Método para solicitar el restablecimiento de la contraseña
-  requestPasswordReset(email: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/request-reset-email`, { email });
+  // Method to request password reset
+  async requestPasswordReset(email: string): Promise<any> {
+    return this.axiosService.post(`${this.apiUrl}/request-reset-email`, { email });
   }
 
-  // Método para verificar el token de restablecimiento de contraseña
-  checkPasswordResetToken(uidb64: string, token: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/password-reset/${uidb64}/${token}`);
+  // Method to check password reset token
+  async checkPasswordResetToken(uidb64: string, token: string): Promise<any> {
+    return this.axiosService.get(`${this.apiUrl}/password-reset/${uidb64}/${token}`);
   }
 
-  // Método para establecer una nueva contraseña
-  setNewPassword(password: string, uidb64: string, token: string): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/password-reset-complete`, {
+  // Method to set new password
+  async setNewPassword(password: string, uidb64: string, token: string): Promise<any> {
+    return this.axiosService.patch(`${this.apiUrl}/password-reset-complete`, {
       password,
       uidb64,
       token

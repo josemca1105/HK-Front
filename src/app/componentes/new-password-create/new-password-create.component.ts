@@ -23,6 +23,7 @@ export class NewPasswordCreateComponent implements OnInit {
   isLoading = false;
   showAlert = false;
   alertFadeOut = false;
+  public showError: boolean = false;
 
   constructor(
     private router: Router,
@@ -50,8 +51,6 @@ export class NewPasswordCreateComponent implements OnInit {
         this.confirmPasswordFieldType === 'password' ? 'text' : 'password';
     }
   }
-
-  public showError: boolean = false;
 
   private validatePassword(password: string): boolean {
     const minLength = 8;
@@ -86,7 +85,7 @@ export class NewPasswordCreateComponent implements OnInit {
     return true;
   }
 
-  createNewPassword() {
+  async createNewPassword() {
     console.log('Password:', this.password);
     console.log('Confirm Password:', this.confirmPassword);
 
@@ -114,26 +113,42 @@ export class NewPasswordCreateComponent implements OnInit {
     this.showError = false;
     this.isLoading = true;
 
-    this.authService.setNewPassword(this.password, this.uidb64, this.token)
-      .subscribe({
-        next: () => {
-          this.isLoading = false;
-          this.router.navigate(['/login']);
-        },
-        error: (error) => {
-          if (error.status === 401) {
-            // Token is not valid, show an error message to the user
-            this.errorMessage = 'Token is not valid, please request a new one';
-            this.showError = true;
-            this.showAlert = true;
-          } else {
-            // Handle other errors
-            this.errorMessage = 'An error occurred, please try again later';
-            this.showError = true;
-            this.showAlert = true;
-          }
-        }
-      });
+    try {
+      await this.authService.setNewPassword(this.password, this.uidb64, this.token);
+      this.isLoading = false;
+      this.router.navigate(['/login']);
+    } catch (error: any) {
+      this.isLoading = false;
+      if (error.response && error.response.status === 401) {
+        // Token is not valid, show an error message to the user
+        this.errorMessage = 'Token is not valid, please request a new one';
+      } else {
+        // Handle other errors
+        this.errorMessage = 'An error occurred, please try again later';
+      }
+      this.showError = true;
+      this.showAlert = true;
+    }
+    // this.authService.setNewPassword(this.password, this.uidb64, this.token)
+    //   .subscribe({
+    //     next: () => {
+    //       this.isLoading = false;
+    //       this.router.navigate(['/login']);
+    //     },
+    //     error: (error) => {
+    //       if (error.status === 401) {
+    //         // Token is not valid, show an error message to the user
+    //         this.errorMessage = 'Token is not valid, please request a new one';
+    //         this.showError = true;
+    //         this.showAlert = true;
+    //       } else {
+    //         // Handle other errors
+    //         this.errorMessage = 'An error occurred, please try again later';
+    //         this.showError = true;
+    //         this.showAlert = true;
+    //       }
+    //     }
+    //   });
   }
 
   dismissError() {
