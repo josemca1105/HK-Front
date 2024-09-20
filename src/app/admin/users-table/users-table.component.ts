@@ -4,11 +4,19 @@ import { NgFor, NgIf } from '@angular/common';
 import { UsersCreateModalComponent } from '../users-create-modal/users-create-modal.component';
 import { UsersEditModalComponent } from '../users-edit-modal/users-edit-modal.component';
 import { UsersDeleteModalComponent } from '../users-delete-modal/users-delete-modal.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-users-table',
   standalone: true,
-  imports: [NgFor, UsersCreateModalComponent, UsersEditModalComponent, UsersDeleteModalComponent, NgIf],
+  imports: [
+    NgFor,
+    UsersCreateModalComponent,
+    UsersEditModalComponent,
+    UsersDeleteModalComponent,
+    NgIf,
+    NgxPaginationModule
+  ],
   templateUrl: './users-table.component.html',
   styleUrl: './users-table.component.scss',
 })
@@ -20,6 +28,7 @@ export class UsersTableComponent implements OnInit {
   selectedUserId: number | null = null;
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
+  page: number = 1;
 
   sortTable(column: string) {
     if (this.sortColumn === column) {

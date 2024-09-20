@@ -2,16 +2,18 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CaptacionesService } from '../../services/captaciones.service';
 import { NgFor } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-captaciones-admin-table',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgxPaginationModule],
   templateUrl: './captaciones-admin-table.component.html',
   styleUrl: './captaciones-admin-table.component.scss'
 })
 export class CaptacionesAdminTableComponent {
   captaciones: any[] = [];
+  page: number = 1;
 
   constructor(private captacionesService: CaptacionesService, private router: Router) {}
 
