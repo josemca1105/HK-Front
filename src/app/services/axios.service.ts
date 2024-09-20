@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 export class AxiosService {
   private axiosInstance: AxiosInstance;
 
-  constructor() {
+  constructor(private cookieService: CookieService) {
     this.axiosInstance = axios.create({
       baseURL: 'http://127.0.0.1:8000/api/', // Replace with your API base URL
       withCredentials: true, // This is important for cookie authentication
@@ -17,10 +18,11 @@ export class AxiosService {
       },
     });
 
-    // Add request interceptor to handle authentication
+    // Agregar interceptor para incluir el token JWT en las solicitudes
     this.axiosInstance.interceptors.request.use(
       (config) => {
-        // You can add any auth headers here if needed
+        // No necesitamos establecer manualmente el token en el encabezado
+        // ya que estamos usando cookies HttpOnly
         return config;
       },
       (error) => {
@@ -36,6 +38,7 @@ export class AxiosService {
           // Handle unauthorized access (e.g., redirect to login)
           console.log('Unauthorized access. Redirecting to login...');
           // Implement your logout or redirect logic here
+          window.location.href = '/login';
         }
         return Promise.reject(error);
       }

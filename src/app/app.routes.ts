@@ -11,9 +11,9 @@ import { CaptacionesAdminTableComponent } from './admin/captaciones-admin-table/
 import { CaptacionesAdminEditComponent } from './admin/captaciones-admin-edit/captaciones-admin-edit.component';
 import { CaptacionesPersonalCreateComponent } from './componentes/captaciones-personal-create/captaciones-personal-create.component';
 import { CaptacionesPersonalEditComponent } from './componentes/captaciones-personal-edit/captaciones-personal-edit.component';
-import { PruebaComponent } from './pages/prueba/prueba.component';
 import { NewPasswordRequestComponent } from './componentes/new-password-request/new-password-request.component';
 import { NewPasswordCreateComponent } from './componentes/new-password-create/new-password-create.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -31,46 +31,52 @@ export const routes: Routes = [
   {
     path: '',
     component: NavbarComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'inicio',
         component: HomeComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'perfil',
         component: PerfilComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'perfil-edit/:id',
         component: PerfilEditComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'admin/users/table',
         component: UsersTableComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'captaciones',
         component: CaptacionesComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'admin/captaciones/table',
         component: CaptacionesAdminTableComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'admin/captaciones/edit/:id',
         component: CaptacionesAdminEditComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'captaciones/create',
         component: CaptacionesPersonalCreateComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'captaciones/edit/:id',
         component: CaptacionesPersonalEditComponent,
-      },
-      {
-        path: 'prueba',
-        component: PruebaComponent,
+        canActivate: [authGuard],
       },
     ],
   },
