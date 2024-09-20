@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
-import { NgIf, CommonModule, NgOptimizedImage } from '@angular/common'; // Importar CommonModule
+import { NgIf, CommonModule, NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -53,6 +53,7 @@ export class LoginComponent {
       this.errorMessage = 'Credenciales incorrectas. Por favor, inténtelo de nuevo.';
       this.showError = true;
       this.showAlert = true; // Mostrar alerta
+      this.isLoading = false; // Estado para el loader
     }
   }
 
