@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AxiosService } from './axios.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,10 @@ import { AxiosService } from './axios.service';
 export class AuthService {
   private apiUrl = 'http://localhost:8000/api';
 
-  constructor(private axiosService: AxiosService) { }
+  constructor(
+    private axiosService: AxiosService,
+    private cookieService: CookieService
+  ) { }
 
   // Method to register a new user
   async register(userData: any): Promise<any> {
@@ -16,7 +20,9 @@ export class AuthService {
 
   // Method to login
   async login(credentials: { email: string, password: string }): Promise<any> {
-    return this.axiosService.post(`${this.apiUrl}/login`, credentials);
+    const response = await this.axiosService.post(`${this.apiUrl}/login`, credentials);
+    // No necesitamos establecer manualmente la cookie, el backend lo hace
+    return response;
   }
 
   // Method to get authenticated user data
@@ -26,7 +32,9 @@ export class AuthService {
 
   // Method to logout
   async logout(): Promise<any> {
-    return this.axiosService.post(`${this.apiUrl}/logout`, {});
+    const response = await this.axiosService.post(`${this.apiUrl}/logout`, {});
+    this.cookieService.delete('jwt', '/');
+    return response;
   }
 
   // Method to request password reset
@@ -48,5 +56,13 @@ export class AuthService {
     };
 
     return this.axiosService.patch(`${this.apiUrl}/password-reset-complete`, resetData);
+  }
+
+  // Metodo para verificar si el usuario esta autenticado
+  isAuthenticated(): Promise<boolean> {
+    // No podemos leer directamente la cookie HttpOnly, así que hacemos una petición al backend
+    return this.axiosService.get(`${this.apiUrl}/auth`)
+      .then(() => true)
+      .catch(() => false);
   }
 }
