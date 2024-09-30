@@ -5,18 +5,42 @@ import { CaptacionesService } from '../../services/captaciones.service';
 import { NgFor, NgIf } from '@angular/common';
 import { PerfilEditModalComponent } from '../perfil-edit-modal/perfil-edit-modal.component';
 import { firstValueFrom } from 'rxjs';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [NgFor, PerfilEditModalComponent, NgIf],
+  imports: [NgFor, PerfilEditModalComponent, NgIf, NgxPaginationModule],
   templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.scss']
+  styleUrls: ['./perfil.component.scss'],
 })
-export class PerfilComponent implements OnInit{
+export class PerfilComponent implements OnInit {
   userId: number | null = null;
   captaciones: any[] = [];
   isEditModalOpen = false;
+  sortColumn: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  page: number = 1;
+
+  sortTable(column: string) {
+    if (this.sortColumn === column) {
+      // If the same column is clicked, reverse the sort direction
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      // If a new column is clicked, set it as the sort column and default to ascending
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+
+    this.captaciones.sort((a, b) => {
+      const valueA = a[column];
+      const valueB = b[column];
+
+      if (valueA < valueB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valueA > valueB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }
 
   constructor(
     private router: Router,
@@ -57,7 +81,9 @@ export class PerfilComponent implements OnInit{
   async loadCaptaciones(): Promise<void> {
     if (this.userId !== null) {
       try {
-        const response = await firstValueFrom(this.captacionesService.getCaptacionesByUser());
+        const response = await firstValueFrom(
+          this.captacionesService.getCaptacionesByUser()
+        );
         console.log('User captaciones fetched successfully', response);
         this.captaciones = response;
       } catch (error) {
@@ -76,7 +102,9 @@ export class PerfilComponent implements OnInit{
   // Metodo para eliminar una captacion
   async deleteCaptacion(id: number): Promise<void> {
     try {
-      const response = await firstValueFrom(this.captacionesService.deleteCaptacion(id));
+      const response = await firstValueFrom(
+        this.captacionesService.deleteCaptacion(id)
+      );
       console.log('Captacion deleted successfully', response);
       await this.loadCaptaciones();
     } catch (error) {
@@ -93,5 +121,16 @@ export class PerfilComponent implements OnInit{
   // Metodo para cerrar el modal de edición
   closeEditModal(): void {
     this.isEditModalOpen = false;
+  }
+
+  getSortIcon(column: string): string {
+    if (this.sortColumn !== column) {
+      return 'sort';
+    }
+    return this.sortDirection === 'asc' ? 'sort-up' : 'sort-down';
+  }
+
+  isSortedColumn(column: string): boolean {
+    return this.sortColumn === column;
   }
 }
