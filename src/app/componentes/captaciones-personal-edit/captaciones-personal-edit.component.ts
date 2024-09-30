@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CaptacionesService } from '../../services/captaciones.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-captaciones-personal-edit',
   standalone: true,
-  imports: [FormsModule, NgIf],
+  imports: [FormsModule, NgIf, RouterLink],
   templateUrl: './captaciones-personal-edit.component.html',
-  styleUrl: './captaciones-personal-edit.component.scss'
+  styleUrl: './captaciones-personal-edit.component.scss',
 })
 export class CaptacionesPersonalEditComponent implements OnInit {
   captacion: any = {
@@ -23,7 +23,7 @@ export class CaptacionesPersonalEditComponent implements OnInit {
     tipo: '',
     disponibilidad: '',
     status: '',
-  }
+  };
 
   captacionId: number | null = null;
 
@@ -34,7 +34,7 @@ export class CaptacionesPersonalEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
         this.captacionId = +id;
@@ -53,14 +53,15 @@ export class CaptacionesPersonalEditComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error', error);
-        }
+        },
       });
     }
   }
 
   onSubmit(): void {
     if (this.captacionId !== null) {
-      this.captacionesService.updateCaptacion(this.captacion, this.captacionId)
+      this.captacionesService
+        .updateCaptacion(this.captacion, this.captacionId)
         .subscribe({
           next: (response) => {
             console.log('Captacion updated', response);
@@ -68,8 +69,8 @@ export class CaptacionesPersonalEditComponent implements OnInit {
           },
           error: (error) => {
             console.error('Error updating captacion', error);
-          }
+          },
         });
-      }
+    }
   }
 }
