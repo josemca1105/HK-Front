@@ -72,34 +72,60 @@
       />
     </div>
     <div class="form-group">
-      <label for="tipo">Tipo:</label>
+      <label for="banos">Baños:</label>
       <input
-        type="text"
+        type="number"
+        id="banos"
+        name="banos"
+        [(ngModel)]="captacion.n_banos"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="habitaciones">N° Habitaciones:</label>
+      <input
+        type="number"
+        id="habitaciones"
+        name="habitaciones"
+        [(ngModel)]="captacion.n_habitaciones"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="tipo">Tipo:</label>
+      <select
         id="tipo"
         name="tipo"
         [(ngModel)]="captacion.tipo"
         class="form-control"
-      />
+      >
+        <option value="alquiler">Alquiler</option>
+        <option value="venta">Venta</option>
+      </select>
     </div>
     <div class="form-group">
       <label for="disponibilidad">Disponibilidad:</label>
-      <input
-        type="text"
+      <select
         id="disponibilidad"
         name="disponibilidad"
         [(ngModel)]="captacion.disponibilidad"
         class="form-control"
-      />
+      >
+        <option value="disponible">Disponible</option>
+        <option value="no disponible">No disponible</option>
+      </select>
     </div>
     <div class="form-group">
       <label for="status">Status:</label>
-      <input
-        type="text"
+      <select
         id="status"
         name="status"
         [(ngModel)]="captacion.status"
         class="form-control"
-      />
+      >
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
     </div>
     <button type="submit" class="bg-teal-600">Update captacion</button>
     <a routerLink="/perfil">Perfil</a>

@@ -3,6 +3,18 @@
 
   <form (ngSubmit)="onSubmit()" #userForm="ngForm">
     <div class="form-group">
+      <label for="codigo">Codigo</label>
+      <input
+        type="text"
+        id="codigo"
+        name="codigo"
+        [(ngModel)]="captacion.codigo"
+        class="form-control"
+        disabled
+      />
+    </div>
+
+    <div class="form-group">
       <label for="userName">Asesor</label>
       <input
         type="text"
@@ -15,26 +27,28 @@
     </div>
 
     <div class="form-group">
-      <label for="disponibilidad">Nueva Disponibilidad</label>
-      <input
-        type="text"
+      <label for="disponibilidad">Nueva Disponibilidad:</label>
+      <select
         id="disponibilidad"
         name="disponibilidad"
         [(ngModel)]="captacion.disponibilidad"
         class="form-control"
-      />
+      >
+        <option value="disponible">Disponible</option>
+        <option value="no disponible">No disponible</option>
+      </select>
     </div>
-
     <div class="form-group">
-      <label for="status">Nuevo Status</label>
-      <input
-        type="text"
+      <label for="status">Nuevo Status:</label>
+      <select
         id="status"
         name="status"
         [(ngModel)]="captacion.status"
-        required
         class="form-control"
-      />
+      >
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
     </div>
 
     <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">
