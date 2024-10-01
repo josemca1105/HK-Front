@@ -8,7 +8,6 @@ import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 import { PerfilEditComponent } from './componentes/perfil-edit/perfil-edit.component';
 import { CaptacionesPageComponent } from './pages/captaciones-page/captaciones-page.component';
 import { CaptacionesAdminTableComponent } from './admin/captaciones-admin-table/captaciones-admin-table.component';
-import { CaptacionesAdminEditComponent } from './admin/captaciones-admin-edit/captaciones-admin-edit.component';
 import { CaptacionesPersonalCreateComponent } from './componentes/captaciones-personal-create/captaciones-personal-create.component';
 import { CaptacionesPersonalEditComponent } from './componentes/captaciones-personal-edit/captaciones-personal-edit.component';
 import { NewPasswordRequestComponent } from './componentes/new-password-request/new-password-request.component';
@@ -61,11 +60,6 @@ export const routes: Routes = [
       {
         path: 'admin/captaciones/table',
         component: CaptacionesAdminTableComponent,
-        canActivate: [authGuard],
-      },
-      {
-        path: 'admin/captaciones/edit/:id',
-        component: CaptacionesAdminEditComponent,
         canActivate: [authGuard],
       },
       {
