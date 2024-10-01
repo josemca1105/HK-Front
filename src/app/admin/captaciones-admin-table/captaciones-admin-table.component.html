@@ -309,3 +309,9 @@
     </div>
   </div>
 </div>
+
+<app-captaciones-edit-modal
+  *ngIf="isEditModalOpen"
+  [captacionId]="selectedCaptacionId"
+  (close)="closeEditModal()"
+></app-captaciones-edit-modal>
