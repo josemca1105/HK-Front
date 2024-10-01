@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CaptacionesService } from '../../services/captaciones.service';
-import { NgFor } from '@angular/common';
+import { CaptacionesEditModalComponent } from '../captaciones-edit-modal/captaciones-edit-modal.component';
+import { NgFor, NgIf } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-captaciones-admin-table',
   standalone: true,
-  imports: [NgFor, NgxPaginationModule],
+  imports: [NgIf, NgFor, NgxPaginationModule, CaptacionesEditModalComponent],
   templateUrl: './captaciones-admin-table.component.html',
   styleUrl: './captaciones-admin-table.component.scss',
 })
-export class CaptacionesAdminTableComponent {
+export class CaptacionesAdminTableComponent implements OnInit {
   captaciones: any[] = [];
   isCreateModalOpen = false;
   isEditModalOpen = false;
   isDeleteModalOpen = false;
-  selectedUserId: number | null = null;
+  selectedCaptacionId: number | null = null;
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
   page: number = 1;
@@ -46,7 +47,7 @@ export class CaptacionesAdminTableComponent {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadCaptaciones();
   }
 
@@ -63,7 +64,13 @@ export class CaptacionesAdminTableComponent {
   }
 
   editCaptacion(id: number) {
-    this.router.navigate(['/admin/captaciones/edit', id]);
+    this.selectedCaptacionId = id;
+    this.isEditModalOpen = true;
+  }
+
+  closeEditModal(): void {
+    this.isEditModalOpen = false;
+    this.loadCaptaciones();
   }
 
   deleteCaptacion(id: number) {
