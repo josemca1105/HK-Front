@@ -294,6 +294,12 @@
   <app-perfil-edit-modal
     *ngIf="isEditModalOpen"
     [userId]="userId"
-    (close)="closeEditModal()"
+    (close)="closeEditPerfilModal()"
   ></app-perfil-edit-modal>
+
+  <app-captaciones-delete-modal
+    *ngIf="isDeleteModalOpen"
+    [captacionId]="captacionId"
+    (close)="closeDeleteModal()"
+  ></app-captaciones-delete-modal>
 </div>

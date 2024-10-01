@@ -73,18 +73,6 @@ export class CaptacionesAdminTableComponent implements OnInit {
     this.loadCaptaciones();
   }
 
-  deleteCaptacion(id: number) {
-    this.captacionesService.deleteCaptacion(id).subscribe({
-      next: (response) => {
-        console.log('Captacion deleted successfully', response);
-        this.loadCaptaciones();
-      },
-      error: (error) => {
-        console.error('Error deleting captacion', error);
-      },
-    });
-  }
-
   capitalizeFirstLetter(f_letter: string): string {
     if (!f_letter) return '';
     return f_letter.charAt(0).toUpperCase() + f_letter.slice(1).toLowerCase();
