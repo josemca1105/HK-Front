@@ -1,5 +1,5 @@
 <div class="edit-user-container">
-  <h2>Edit User Role</h2>
+  <h2>Editar Disponibilidad o Status de captación</h2>
 
   <form (ngSubmit)="onSubmit()" #userForm="ngForm">
     <div class="form-group">
@@ -40,5 +40,6 @@
     <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">
       Actualizar Disponibilidad y/o Status
     </button>
+    <a routerLink="/admin/captaciones/table">Volver</a>
   </form>
 </div>

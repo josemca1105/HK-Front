@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
+import { InicioComponent } from './pages/inicio/inicio.component';
 import { LoginComponent } from './componentes/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
 import { Error404Component } from './componentes/error404/error404.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { UsersTableComponent } from './admin/users-table/users-table.component';
-import { PerfilComponent } from './componentes/perfil/perfil.component';
+import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 import { PerfilEditComponent } from './componentes/perfil-edit/perfil-edit.component';
-import { CaptacionesComponent } from './componentes/captaciones/captaciones.component';
+import { CaptacionesPageComponent } from './pages/captaciones-page/captaciones-page.component';
 import { CaptacionesAdminTableComponent } from './admin/captaciones-admin-table/captaciones-admin-table.component';
 import { CaptacionesAdminEditComponent } from './admin/captaciones-admin-edit/captaciones-admin-edit.component';
 import { CaptacionesPersonalCreateComponent } from './componentes/captaciones-personal-create/captaciones-personal-create.component';
@@ -35,12 +35,17 @@ export const routes: Routes = [
     children: [
       {
         path: 'inicio',
-        component: HomeComponent,
+        component: InicioComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'captaciones',
+        component: CaptacionesPageComponent,
         canActivate: [authGuard],
       },
       {
         path: 'perfil',
-        component: PerfilComponent,
+        component: PerfilPageComponent,
         canActivate: [authGuard],
       },
       {
@@ -51,11 +56,6 @@ export const routes: Routes = [
       {
         path: 'admin/users/table',
         component: UsersTableComponent,
-        canActivate: [authGuard],
-      },
-      {
-        path: 'captaciones',
-        component: CaptacionesComponent,
         canActivate: [authGuard],
       },
       {

@@ -63,7 +63,7 @@ export class CaptacionesAdminTableComponent {
   }
 
   editCaptacion(id: number) {
-    this.router.navigate(['/captaciones-admin-edit', id]);
+    this.router.navigate(['/admin/captaciones/edit', id]);
   }
 
   deleteCaptacion(id: number) {
