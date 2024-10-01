@@ -6,18 +6,27 @@ import { NgFor, NgIf } from '@angular/common';
 import { PerfilEditModalComponent } from '../perfil-edit-modal/perfil-edit-modal.component';
 import { firstValueFrom } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CaptacionesDeleteModalComponent } from '../captaciones-delete-modal/captaciones-delete-modal.component';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [NgFor, PerfilEditModalComponent, NgIf, NgxPaginationModule],
+  imports: [
+    NgFor,
+    PerfilEditModalComponent,
+    NgIf,
+    NgxPaginationModule,
+    CaptacionesDeleteModalComponent,
+  ],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.scss'],
 })
 export class PerfilComponent implements OnInit {
   userId: number | null = null;
+  captacionId: number | null = null;
   captaciones: any[] = [];
   isEditModalOpen = false;
+  isDeleteModalOpen = false;
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
   page: number = 1;
@@ -100,16 +109,9 @@ export class PerfilComponent implements OnInit {
   }
 
   // Metodo para eliminar una captacion
-  async deleteCaptacion(id: number): Promise<void> {
-    try {
-      const response = await firstValueFrom(
-        this.captacionesService.deleteCaptacion(id)
-      );
-      console.log('Captacion deleted successfully', response);
-      await this.loadCaptaciones();
-    } catch (error) {
-      console.error('Error deleting captacion', error);
-    }
+  deleteCaptacion(id: number): void {
+    this.captacionId = id; // Guardamos el ID del usuario seleccionado
+    this.isDeleteModalOpen = true; // Abrimos el modal de edición
   }
 
   // Metodo para colocar primera letra en mayúscula
@@ -119,8 +121,14 @@ export class PerfilComponent implements OnInit {
   }
 
   // Metodo para cerrar el modal de edición
-  closeEditModal(): void {
+  closeEditPerfilModal(): void {
     this.isEditModalOpen = false;
+    this.loadCaptaciones();
+  }
+
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+    this.loadCaptaciones();
   }
 
   getSortIcon(column: string): string {
