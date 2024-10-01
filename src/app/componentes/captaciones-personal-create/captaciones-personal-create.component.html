@@ -72,14 +72,36 @@
       />
     </div>
     <div class="form-group">
-      <label for="tipo">Tipo:</label>
+      <label for="banos">Baños:</label>
       <input
-        type="text"
+        type="number"
+        id="banos"
+        name="banos"
+        [(ngModel)]="captacion.n_banos"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="habitaciones">N° Habitaciones:</label>
+      <input
+        type="number"
+        id="habitaciones"
+        name="habitaciones"
+        [(ngModel)]="captacion.n_habitaciones"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="tipo">Tipo:</label>
+      <select
         id="tipo"
         name="tipo"
         [(ngModel)]="captacion.tipo"
         class="form-control"
-      />
+      >
+        <option value="alquiler">Alquiler</option>
+        <option value="venta">Venta</option>
+      </select>
     </div>
     <button type="submit" class="bg-teal-600">Create captacion</button>
     <a routerLink="/perfil">Perfil</a>

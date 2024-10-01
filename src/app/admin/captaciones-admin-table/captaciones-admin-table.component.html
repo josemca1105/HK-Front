@@ -240,6 +240,62 @@
               <span>Precio</span>
             </div>
           </th>
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'n_banos'"
+            (click)="sortTable('n_banos')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'n_banos'">Baños</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-4 cursor-pointer group"
+            [class.bg-[#40697B]]="sortColumn === 'n_habitaciones'"
+            (click)="sortTable('n_habitaciones')"
+          >
+            <div class="flex items-center space-x-1">
+              <span [class.font-bold]="sortColumn === 'n_habitaciones'"
+                >Habitaciones</span
+              >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-up-down"
+              >
+                <path d="m21 16-4 4-4-4" />
+                <path d="M17 20V4" />
+                <path d="m3 8 4-4 4 4" />
+                <path d="M7 4v16" />
+              </svg>
+            </div>
+          </th>
           <th scope="col" class="px-6 py-4">Acción</th>
         </tr>
       </thead>
@@ -280,6 +336,12 @@
           </td>
           <td class="px-6 py-4">
             {{ captacion.precio }}
+          </td>
+          <td class="px-6 py-4">
+            {{ captacion.n_banos }}
+          </td>
+          <td class="px-6 py-4">
+            {{ captacion.n_habitaciones }}
           </td>
           <td class="px-6 py-4">
             <button
