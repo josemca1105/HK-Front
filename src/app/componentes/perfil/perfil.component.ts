@@ -7,6 +7,7 @@ import { PerfilEditModalComponent } from '../perfil-edit-modal/perfil-edit-modal
 import { firstValueFrom } from 'rxjs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CaptacionesDeleteModalComponent } from '../captaciones-delete-modal/captaciones-delete-modal.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-perfil',
@@ -17,6 +18,8 @@ import { CaptacionesDeleteModalComponent } from '../captaciones-delete-modal/cap
     NgIf,
     NgxPaginationModule,
     CaptacionesDeleteModalComponent,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.scss'],
@@ -25,6 +28,15 @@ export class PerfilComponent implements OnInit {
   userId: number | null = null;
   captacionId: number | null = null;
   captaciones: any[] = [];
+  filteredCaptaciones: any[] = [];
+  filters = {
+    titulo: '',
+    direccion: '',
+    tipo: '',
+    precio: null,
+    banos: null,
+    habitaciones: null,
+  };
   isEditModalOpen = false;
   isDeleteModalOpen = false;
   sortColumn: string = '';
@@ -95,12 +107,50 @@ export class PerfilComponent implements OnInit {
         );
         console.log('User captaciones fetched successfully', response);
         this.captaciones = response;
+        this.filteredCaptaciones = response;
       } catch (error) {
         console.error('Error getting captaciones', error);
       }
     } else {
       console.error('User ID is not available');
     }
+  }
+
+  // Metodo para aplicar los filtros
+  applyFilters(): void {
+    this.filteredCaptaciones = this.captaciones.filter((captacion) => {
+      return (
+        (!this.filters.titulo ||
+          captacion.titulo
+            .toLowerCase()
+            .includes(this.filters.titulo.toLowerCase())) &&
+        (!this.filters.direccion ||
+          captacion.direccion
+            .toLowerCase()
+            .includes(this.filters.direccion.toLowerCase())) &&
+        (!this.filters.tipo ||
+          captacion.tipo
+            .toLowerCase()
+            .includes(this.filters.tipo.toLowerCase())) &&
+        (!this.filters.precio || captacion.precio <= this.filters.precio) &&
+        (!this.filters.banos || captacion.n_banos == this.filters.banos) &&
+        (!this.filters.habitaciones ||
+          captacion.n_habitaciones == this.filters.habitaciones)
+      );
+    });
+  }
+
+  // Metodo para limpiar los filtros
+  clearFilters(): void {
+    this.filters = {
+      titulo: '',
+      direccion: '',
+      tipo: '',
+      precio: null,
+      banos: null,
+      habitaciones: null,
+    };
+    this.filteredCaptaciones = this.captaciones;
   }
 
   // Metodo para editar una captacion

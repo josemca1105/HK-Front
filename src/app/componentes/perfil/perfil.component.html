@@ -9,6 +9,57 @@
   <button (click)="createCaptacion()" class="btn btn-primary">
     Crear captacion
   </button>
+
+  <!-- Filtro de búsqueda -->
+  <div class="my-6 px-10">
+    <h2 class="font-bold font-raleway text-3xl text-[#20343d]">
+      Filtros de Búsqueda
+    </h2>
+    <div class="grid grid-cols-2 gap-4 my-4">
+      <input
+        type="text"
+        [(ngModel)]="filters.titulo"
+        placeholder="Título"
+        class="form-control"
+      />
+      <input
+        type="text"
+        [(ngModel)]="filters.direccion"
+        placeholder="Dirección"
+        class="form-control"
+      />
+      <select [(ngModel)]="filters.tipo" class="form-control">
+        <option value="" disabled selected hidden>Seleccione un tipo</option>
+        <option value="alquiler">Alquiler</option>
+        <option value="venta">Venta</option>
+      </select>
+      <input
+        type="number"
+        [(ngModel)]="filters.precio"
+        placeholder="Precio"
+        class="form-control"
+      />
+      <input
+        type="number"
+        [(ngModel)]="filters.banos"
+        placeholder="Baños"
+        class="form-control"
+      />
+      <input
+        type="number"
+        [(ngModel)]="filters.habitaciones"
+        placeholder="Habitaciones"
+        class="form-control"
+      />
+    </div>
+    <button (click)="applyFilters()" class="btn btn-primary">
+      Aplicar Filtros
+    </button>
+    <button (click)="clearFilters()" class="btn btn-secondary">
+      Limpiar Filtros
+    </button>
+  </div>
+
   <div class="px-10">
     <div class="flex items-center justify-between my-6">
       <h2 class="font-bold font-raleway text-3xl text-[#20343d]">
@@ -286,7 +337,7 @@
         <tbody class="font-poppins">
           <tr
             *ngFor="
-              let captacion of captaciones
+              let captacion of filteredCaptaciones
                 | paginate : { itemsPerPage: 7, currentPage: page }
             "
             class="odd:bg-white even:bg-[#e6f3f7] border-b hover:bg-[#d1e8ee] transition duration-200"
