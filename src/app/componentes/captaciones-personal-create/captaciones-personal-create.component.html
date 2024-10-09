@@ -114,7 +114,18 @@
         <option value="venta">Venta</option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="imagenes">Imágenes:</label>
+      <input
+        type="file"
+        id="imagenes"
+        name="imagenes"
+        (change)="onFilesSelected($event)"
+        class="form-control"
+        multiple
+      />
+    </div>
     <button type="submit" class="bg-teal-600">Create captación</button>
-    <a routerLink="/perfil">Perfil</a>
+    <a routerLink="/perfil">Volver</a>
   </form>
 </div>
