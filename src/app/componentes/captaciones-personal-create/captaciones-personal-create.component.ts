@@ -92,7 +92,7 @@ export class CaptacionesPersonalCreateComponent {
           console.error('Error al subir imágenes', error);
         });
     } else {
-      this.createCaptacion();
+      console.error('Por favor selecciona al menos una imagen.');
     }
   }
 

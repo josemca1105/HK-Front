@@ -6,6 +6,7 @@ import {
   ref,
   uploadBytes,
   getDownloadURL,
+  deleteObject,
 } from '@angular/fire/storage';
 
 @Injectable({
@@ -77,5 +78,20 @@ export class CaptacionesService {
     }
 
     return Promise.all(uploadPromises); // Devolver todas las URLs
+  }
+
+  // Metodo para eliminar una imagen de Firebase Storage
+  deleteImages(imageUrls: string[]): Promise<void[]> {
+    const deletePromises: Promise<void>[] = imageUrls.map((url) => {
+      const imgRef = ref(this.storage, url);
+      return deleteObject(imgRef)
+        .then(() => console.log(`Imagen eliminada: ${url}`))
+        .catch((error) => {
+          console.error('Error eliminando imagen:', error);
+          throw error;
+        });
+    });
+
+    return Promise.all(deletePromises); // Devolver una promesa cuando todas las imágenes sean eliminadas
   }
 }
