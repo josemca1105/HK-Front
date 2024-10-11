@@ -8,12 +8,13 @@ import {
   getDownloadURL,
   deleteObject,
 } from '@angular/fire/storage';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CaptacionesService {
-  private apiUrl = 'http://localhost:8000/api/inmuebles';
+  private apiUrl = `${environment.api.baseUrl}/inmuebles`;
 
   constructor(private http: HttpClient, private storage: Storage) {}
 
