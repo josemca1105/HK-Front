@@ -8,4 +8,7 @@ export const environment = {
     authDomain: 'your-prod-auth-domain',
     messagingSenderId: 'your-prod-messaging-sender-id',
   },
+  api: {
+    baseUrl: 'your-prod-api-base-url',
+  },
 };
