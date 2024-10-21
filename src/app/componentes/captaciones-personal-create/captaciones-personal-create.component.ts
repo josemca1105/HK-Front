@@ -14,7 +14,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 export class CaptacionesPersonalCreateComponent {
   captacion: any = {
     asesor: {},
-    codigo: '',
     titulo: '',
     descripcion: '',
     direccion: '',
@@ -27,6 +26,7 @@ export class CaptacionesPersonalCreateComponent {
     disponibilidad: 'disponible',
     status: 'activo',
     imagenes: [],
+    codigo: '',
   };
 
   selectedFiles: FileList | null = null;
@@ -44,7 +44,6 @@ export class CaptacionesPersonalCreateComponent {
   // Validar que los campos obligatorios no estén vacíos
   isFormValid(): boolean {
     const {
-      codigo,
       titulo,
       descripcion,
       direccion,
@@ -56,7 +55,6 @@ export class CaptacionesPersonalCreateComponent {
       n_habitaciones,
     } = this.captacion;
     if (
-      !codigo ||
       !titulo ||
       !descripcion ||
       !direccion ||
@@ -79,32 +77,48 @@ export class CaptacionesPersonalCreateComponent {
       return; // Si la validación falla, no continuamos
     }
 
-    if (this.selectedFiles) {
-      this.captacionesService
-        .uploadImages(this.captacion.codigo, this.selectedFiles)
-        .then((urls: string[]) => {
-          // Asignar las URLs de las imágenes a la captación
-          this.captacion.imagenes = urls;
-          console.log('Imágenes subidas:', urls);
-          this.createCaptacion();
-        })
-        .catch((error) => {
-          console.error('Error al subir imágenes', error);
-        });
-    } else {
-      console.error('Por favor selecciona al menos una imagen.');
-    }
+    this.createCaptacion();
   }
 
   createCaptacion(): void {
+    // Generar un código aleatorio para el grupo de imagenes
+    this.captacion.codigo = this.generateUniqueCode();
+
     this.captacionesService.createCaptacion(this.captacion).subscribe({
       next: (response) => {
-        console.log('Captacion creada', response);
-        this.router.navigate(['/perfil']);
+        console.log('Captación creada', response);
+        // Ahora subimos las imágenes si se seleccionaron
+        if (this.selectedFiles) {
+          this.uploadImages(this.captacion.codigo);
+        } else {
+          console.error('Por favor selecciona al menos una imagen.');
+          this.router.navigate(['/perfil']);
+        }
       },
       error: (error) => {
-        console.error('Error al crear la captacion', error);
+        console.error('Error al crear la captación', error);
       },
     });
+  }
+
+  // Metodo para generar un código aleatorio
+  generateUniqueCode(): string {
+    const date = new Date();
+    return `HK-${date.getTime()}`;
+  }
+
+  // Metodo para subir imagenes
+  uploadImages(codigo: string): void {
+    this.captacionesService
+      .uploadImages(codigo, this.selectedFiles as FileList)
+      .then((urls: string[]) => {
+        // Actualizar las imágenes de la captación creada
+        this.captacion.imagenes = urls;
+        console.log('Imágenes subidas:', urls);
+        this.router.navigate(['/perfil']);
+      })
+      .catch((error) => {
+        console.error('Error al subir imágenes', error);
+      });
   }
 }

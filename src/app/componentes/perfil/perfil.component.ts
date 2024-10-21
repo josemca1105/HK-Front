@@ -170,6 +170,17 @@ export class PerfilComponent implements OnInit {
     return f_letter.charAt(0).toUpperCase() + f_letter.slice(1).toLowerCase();
   }
 
+  // Metodo para formatear el codigo
+  formatCodigo(codigo: number): string {
+    if (codigo > 0 && codigo < 10) {
+      return `HK00${codigo}`;
+    } else if (codigo > 11 && codigo < 100) {
+      return `HK0${codigo}`;
+    } else {
+      return `HK${codigo}`;
+    }
+  }
+
   // Metodo para cerrar el modal de edición
   closeEditPerfilModal(): void {
     this.isEditModalOpen = false;
