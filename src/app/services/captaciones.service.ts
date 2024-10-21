@@ -62,8 +62,8 @@ export class CaptacionesService {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      // Generar la ruta en el formato HK/{codigo}/{nombre de la imagen}
-      const imgRef = ref(this.storage, `HK/${codigo}/${file.name}`);
+      // Generar la ruta en el formato Imagenes/HK/{codigo}/{nombre de la imagen}
+      const imgRef = ref(this.storage, `Imagenes/HK-${codigo}/${file.name}`); // Aquí añadimos solo un "HK-"
 
       const uploadPromise = uploadBytes(imgRef, file)
         .then(() => getDownloadURL(imgRef)) // Obtener la URL después de subir la imagen

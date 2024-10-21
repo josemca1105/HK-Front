@@ -104,7 +104,7 @@ export class CaptacionesPersonalCreateComponent {
   // Metodo para generar un código aleatorio
   generateUniqueCode(): string {
     const date = new Date();
-    return `HK-${date.getTime()}`;
+    return `${date.getTime()}`;
   }
 
   // Metodo para subir imagenes
