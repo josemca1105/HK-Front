@@ -7,6 +7,7 @@ import {
   uploadBytes,
   getDownloadURL,
   deleteObject,
+  listAll,
 } from '@angular/fire/storage';
 import { environment } from '../../environments/environment';
 
@@ -76,6 +77,30 @@ export class CaptacionesService {
     }
 
     return Promise.all(uploadPromises); // Devolver todas las URLs
+  }
+
+  // Obtener la primera imagen de una captación en Firebase Storage usando el ID
+  async getFirstImage(id: number): Promise<string | null> {
+    // Supongamos que la ruta de almacenamiento sigue un patrón relacionado con el ID
+    const folderRef = ref(this.storage, `Imagenes/HK-${id}/`); // Asegúrate de que esta ruta sea correcta
+
+    try {
+      const result = await listAll(folderRef);
+      console.log('Resultados de listAll:', result); // Debugging
+
+      if (result.items.length > 0) {
+        const firstImageRef = result.items[0];
+        const imageUrl = await getDownloadURL(firstImageRef);
+        console.log('URL de la primera imagen:', imageUrl); // Debugging
+        return imageUrl;
+      } else {
+        console.log('No hay imágenes disponibles en esta carpeta'); // Debugging
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching images from folder:', error);
+      return null; // Manejar el error devolviendo null
+    }
   }
 
   // Metodo para eliminar una imagen de Firebase Storage
