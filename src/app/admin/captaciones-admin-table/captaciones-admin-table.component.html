@@ -308,7 +308,7 @@
           class="odd:bg-white even:bg-[#e6f3f7] border-b hover:bg-[#d1e8ee] transition duration-200"
         >
           <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-            HK{{ capitalizeFirstLetter(captacion.codigo) }}
+            {{ formatCodigo(captacion.id) }}
           </th>
           <td class="px-6 py-4 font-medium">
             {{ capitalizeFirstLetter(captacion.asesor.f_name) }}
