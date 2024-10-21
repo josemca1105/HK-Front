@@ -81,24 +81,29 @@ export class CaptacionesPersonalCreateComponent {
   }
 
   createCaptacion(): void {
-    // Generar un código aleatorio para el grupo de imagenes
-    this.captacion.codigo = this.generateUniqueCode();
+    // Generar un código aleatorio para el grupo de imágenes
+    this.captacion.codigo = this.generateUniqueCode(); // Aquí generamos el código
 
-    this.captacionesService.createCaptacion(this.captacion).subscribe({
-      next: (response) => {
-        console.log('Captación creada', response);
-        // Ahora subimos las imágenes si se seleccionaron
-        if (this.selectedFiles) {
-          this.uploadImages(this.captacion.codigo);
-        } else {
-          console.error('Por favor selecciona al menos una imagen.');
+    // Primero sube las imágenes y espera a que se completen
+    if (this.selectedFiles) {
+      this.uploadImages(this.captacion.codigo) // Asegúrate de que el código se pase correctamente
+        .then((urls: string[]) => {
+          // Actualiza las imágenes de la captación con las URLs obtenidas
+          this.captacion.imagenes = urls;
+
+          // Ahora crea la captación con las imágenes
+          return this.captacionesService.createCaptacion(this.captacion);
+        })
+        .then((response: any) => {
+          console.log('Captación creada', response);
           this.router.navigate(['/perfil']);
-        }
-      },
-      error: (error) => {
-        console.error('Error al crear la captación', error);
-      },
-    });
+        })
+        .catch((error: any) => {
+          console.error('Error al crear la captación', error);
+        });
+    } else {
+      console.error('Por favor selecciona al menos una imagen.');
+    }
   }
 
   // Metodo para generar un código aleatorio
@@ -108,17 +113,10 @@ export class CaptacionesPersonalCreateComponent {
   }
 
   // Metodo para subir imagenes
-  uploadImages(codigo: string): void {
-    this.captacionesService
-      .uploadImages(codigo, this.selectedFiles as FileList)
-      .then((urls: string[]) => {
-        // Actualizar las imágenes de la captación creada
-        this.captacion.imagenes = urls;
-        console.log('Imágenes subidas:', urls);
-        this.router.navigate(['/perfil']);
-      })
-      .catch((error) => {
-        console.error('Error al subir imágenes', error);
-      });
+  uploadImages(codigo: string): Promise<string[]> {
+    return this.captacionesService.uploadImages(
+      codigo,
+      this.selectedFiles as FileList
+    );
   }
 }
