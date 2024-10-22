@@ -58,16 +58,15 @@ export class CaptacionesService {
   }
 
   // Subir imágenes a Firebase Storage
-  uploadImages(codigo: string, files: FileList): Promise<string[]> {
+  uploadImages(folderId: string, files: FileList): Promise<string[]> {
     const uploadPromises: Promise<string>[] = [];
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      // Generar la ruta en el formato Imagenes/HK/{codigo}/{nombre de la imagen}
-      const imgRef = ref(this.storage, `Imagenes/HK-${codigo}/${file.name}`); // Aquí añadimos solo un "HK-"
+      const imgRef = ref(this.storage, `Imagenes/HK-${folderId}/${file.name}`);
 
       const uploadPromise = uploadBytes(imgRef, file)
-        .then(() => getDownloadURL(imgRef)) // Obtener la URL después de subir la imagen
+        .then(() => getDownloadURL(imgRef))
         .catch((error) => {
           console.error('Error subiendo imagen:', error);
           throw error;
@@ -76,7 +75,7 @@ export class CaptacionesService {
       uploadPromises.push(uploadPromise);
     }
 
-    return Promise.all(uploadPromises); // Devolver todas las URLs
+    return Promise.all(uploadPromises);
   }
 
   // Obtener la primera imagen de una captación en Firebase Storage usando el ID

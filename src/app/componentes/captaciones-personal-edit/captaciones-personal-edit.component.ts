@@ -1,8 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CaptacionesService } from '../../services/captaciones.service';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+
+interface Captacion {
+  id: number;
+  titulo: string;
+  descripcion: string;
+  direccion: string;
+  estado: string;
+  ciudad: string;
+  precio: string;
+  n_banos: string;
+  n_habitaciones: string;
+  tipo: string;
+  disponibilidad: string;
+  status: string;
+  imagenes: string[];
+}
 
 @Component({
   selector: 'app-captaciones-personal-edit',
@@ -12,8 +28,8 @@ import { NgIf } from '@angular/common';
   styleUrl: './captaciones-personal-edit.component.scss',
 })
 export class CaptacionesPersonalEditComponent implements OnInit {
-  captacion: any = {
-    codigo: '',
+  captacion: Captacion = {
+    id: 0,
     titulo: '',
     descripcion: '',
     direccion: '',
@@ -29,6 +45,7 @@ export class CaptacionesPersonalEditComponent implements OnInit {
   };
 
   captacionId: number | null = null;
+  captacionCodigo: string | null = null;
   selectedFiles: FileList | null = null;
 
   constructor(
@@ -51,9 +68,21 @@ export class CaptacionesPersonalEditComponent implements OnInit {
     if (this.captacionId !== null) {
       this.captacionesService.getCaptacion(this.captacionId).subscribe({
         next: (response) => {
-          // Aquí accedemos a response.data para obtener el objeto del usuario
           console.log('Captacion', response.data);
           this.captacion = response.data;
+          // Extraer el código de la primera imagen URL
+          if (this.captacion.imagenes && this.captacion.imagenes.length > 0) {
+            const match = this.captacion.imagenes[0].match(/HK-(\d+)/);
+            if (match && match[1]) {
+              this.captacionCodigo = match[1];
+            } else {
+              console.error(
+                'No se pudo extraer el código de la URL de la imagen'
+              );
+            }
+          } else {
+            console.error('La captación no tiene imágenes');
+          }
         },
         error: (error) => {
           console.error('Error', error);
@@ -62,43 +91,29 @@ export class CaptacionesPersonalEditComponent implements OnInit {
     }
   }
 
-  // Método para manejar la selección de imágenes
   onImagesSelected(event: any): void {
     this.selectedFiles = event.target.files;
   }
 
   onSubmit(): void {
     if (this.captacionId !== null) {
-      // Si se seleccionan nuevas imágenes, eliminar las anteriores y luego subir las nuevas
       if (this.selectedFiles) {
-        // Primero eliminamos las imágenes antiguas
         if (this.captacion.imagenes && this.captacion.imagenes.length > 0) {
           this.captacionesService
             .deleteImages(this.captacion.imagenes)
             .then(() => {
               console.log('Imágenes anteriores eliminadas');
-              // Subir las nuevas imágenes después de eliminar las anteriores
-              return this.selectedFiles
-                ? this.captacionesService.uploadImages(
-                    this.captacion.codigo,
-                    this.selectedFiles
-                  )
-                : Promise.reject('No files selected');
+              return this.uploadNewImages();
             })
-            .then((imageUrls) => {
-              // Actualizar las URLs de las nuevas imágenes en la captación
-              this.captacion.imagenes = imageUrls;
-              this.updateCaptacion(); // Actualizamos la captación con las nuevas imágenes
+            .then(() => {
+              this.updateCaptacion();
             })
             .catch((error) => {
               console.error('Error al eliminar/subir imágenes', error);
             });
         } else {
-          // Si no hay imágenes anteriores, simplemente subimos las nuevas
-          this.captacionesService
-            .uploadImages(this.captacion.codigo, this.selectedFiles)
-            .then((imageUrls) => {
-              this.captacion.imagenes = imageUrls;
+          this.uploadNewImages()
+            .then(() => {
               this.updateCaptacion();
             })
             .catch((error) => {
@@ -106,15 +121,39 @@ export class CaptacionesPersonalEditComponent implements OnInit {
             });
         }
       } else {
-        // Si no se han seleccionado imágenes nuevas, simplemente actualizar la captación
         this.updateCaptacion();
       }
     }
   }
 
+  private uploadNewImages(): Promise<void> {
+    if (this.captacionId === null || this.selectedFiles === null) {
+      return Promise.reject(
+        'No se puede subir imágenes sin ID o archivos seleccionados'
+      );
+    }
+    if (!this.captacionCodigo) {
+      // Si no hay código, genera uno nuevo
+      this.captacionCodigo = this.generateUniqueCode();
+    }
+    return this.captacionesService
+      .uploadImages(this.captacionCodigo, this.selectedFiles)
+      .then((imageUrls) => {
+        this.captacion.imagenes = imageUrls;
+      });
+  }
+
+  private generateUniqueCode(): string {
+    return Date.now().toString();
+  }
+
   updateCaptacion(): void {
+    if (this.captacionId === null) {
+      console.error('No se puede actualizar la captación sin ID');
+      return;
+    }
     this.captacionesService
-      .updateCaptacion(this.captacion, this.captacionId!)
+      .updateCaptacion(this.captacion, this.captacionId)
       .subscribe({
         next: (response) => {
           console.log('Captacion updated', response);
