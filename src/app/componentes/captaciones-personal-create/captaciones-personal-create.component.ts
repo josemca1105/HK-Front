@@ -26,6 +26,10 @@ export class CaptacionesPersonalCreateComponent {
     n_habitaciones: '',
     disponibilidad: 'disponible',
     status: 'activo',
+    pozo: '',
+    planta: '',
+    documentos: '',
+    observaciones: 'Sin observaciones',
     imagenes: [],
     codigo: '',
   };
@@ -127,6 +131,9 @@ export class CaptacionesPersonalCreateComponent {
       'tipo',
       'n_banos',
       'n_habitaciones',
+      'pozo',
+      'planta',
+      'documentos',
       // 'imagenes',
     ];
     for (const field of requiredFields) {

@@ -3,12 +3,12 @@
 
   <form (ngSubmit)="onSubmit()" #userForm="ngForm">
     <div class="form-group">
-      <label for="codigo">Codigo</label>
+      <label for="codigo">Código</label>
       <input
         type="text"
         id="codigo"
         name="codigo"
-        [(ngModel)]="captacion.codigo"
+        [(ngModel)]="captacion.id"
         class="form-control"
         disabled
       />

@@ -5,7 +5,6 @@ import { Error404Component } from './componentes/error404/error404.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { UsersTableComponent } from './admin/users-table/users-table.component';
 import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
-import { PerfilEditComponent } from './componentes/perfil-edit/perfil-edit.component';
 import { CaptacionesPageComponent } from './pages/captaciones-page/captaciones-page.component';
 import { CaptacionesAdminTableComponent } from './admin/captaciones-admin-table/captaciones-admin-table.component';
 import { CaptacionesPersonalCreateComponent } from './componentes/captaciones-personal-create/captaciones-personal-create.component';
@@ -45,11 +44,6 @@ export const routes: Routes = [
       {
         path: 'perfil',
         component: PerfilPageComponent,
-        canActivate: [authGuard],
-      },
-      {
-        path: 'perfil-edit/:id',
-        component: PerfilEditComponent,
         canActivate: [authGuard],
       },
       {

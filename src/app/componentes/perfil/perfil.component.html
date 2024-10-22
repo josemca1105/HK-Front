@@ -29,7 +29,9 @@
         class="form-control"
       />
       <select [(ngModel)]="filters.tipo" class="form-control">
-        <option value="" disabled selected hidden>Seleccione un tipo</option>
+        <option value="" disabled selected hidden>
+          Escoja entre venta o alquiler
+        </option>
         <option value="alquiler">Alquiler</option>
         <option value="venta">Venta</option>
       </select>
@@ -51,6 +53,23 @@
         placeholder="Habitaciones"
         class="form-control"
       />
+      <select [(ngModel)]="filters.pozo" class="form-control">
+        <option value="" disabled selected hidden>¿Tiene pozo?</option>
+        <option value="si">Si</option>
+        <option value="no">No</option>
+      </select>
+      <select [(ngModel)]="filters.planta" class="form-control">
+        <option value="" disabled selected hidden>¿Tiene planta?</option>
+        <option value="si">Si</option>
+        <option value="no">No</option>
+      </select>
+      <select [(ngModel)]="filters.documentos" class="form-control">
+        <option value="" disabled selected hidden>
+          ¿Esta listo para registro?
+        </option>
+        <option value="si">Si</option>
+        <option value="no">No</option>
+      </select>
     </div>
     <button (click)="applyFilters()" class="btn btn-primary">
       Aplicar Filtros

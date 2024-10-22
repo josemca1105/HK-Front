@@ -36,6 +36,9 @@ export class PerfilComponent implements OnInit {
     precio: null,
     banos: null,
     habitaciones: null,
+    pozo: '',
+    planta: '',
+    documentos: '',
   };
   isEditModalOpen = false;
   isDeleteModalOpen = false;
@@ -132,6 +135,18 @@ export class PerfilComponent implements OnInit {
           captacion.tipo
             .toLowerCase()
             .includes(this.filters.tipo.toLowerCase())) &&
+        (!this.filters.pozo ||
+          captacion.pozo
+            .toLowerCase()
+            .includes(this.filters.pozo.toLowerCase())) &&
+        (!this.filters.planta ||
+          captacion.planta
+            .toLowerCase()
+            .includes(this.filters.planta.toLowerCase())) &&
+        (!this.filters.documentos ||
+          captacion.documentos
+            .toLowerCase()
+            .includes(this.filters.documentos.toLowerCase())) &&
         (!this.filters.precio || captacion.precio <= this.filters.precio) &&
         (!this.filters.banos || captacion.n_banos == this.filters.banos) &&
         (!this.filters.habitaciones ||
@@ -149,6 +164,9 @@ export class PerfilComponent implements OnInit {
       precio: null,
       banos: null,
       habitaciones: null,
+      pozo: '',
+      planta: '',
+      documentos: '',
     };
     this.filteredCaptaciones = this.captaciones;
   }
