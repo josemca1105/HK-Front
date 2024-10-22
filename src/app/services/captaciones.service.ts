@@ -86,7 +86,6 @@ export class CaptacionesService {
 
     try {
       const result = await listAll(folderRef);
-      console.log('Resultados de listAll:', result); // Debugging
 
       if (result.items.length > 0) {
         const firstImageRef = result.items[0];
@@ -94,7 +93,6 @@ export class CaptacionesService {
         console.log('URL de la primera imagen:', imageUrl); // Debugging
         return imageUrl;
       } else {
-        console.log('No hay imágenes disponibles en esta carpeta'); // Debugging
         return null;
       }
     } catch (error) {

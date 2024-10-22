@@ -37,7 +37,6 @@ export class CaptacionesComponent {
       const imageUrl = await this.captacionesService.getFirstImage(
         captacion.id
       ); // Usar id
-      console.log(`Captación: ${captacion.id}, URL de imagen: ${imageUrl}`); // Debugging
       return { ...captacion, imageUrl }; // Añadir la URL de la imagen al objeto captacion
     });
 
