@@ -1,6 +1,5 @@
 <div *ngFor="let captacion of captacionesWithImages">
   <h3>{{ captacion.titulo }}</h3>
-  <!-- Cambié 'nombre' a 'titulo' si corresponde al modelo -->
   <img
     *ngIf="captacion.imagenes; else noImage"
     [src]="captacion.imagenes"
@@ -9,8 +8,8 @@
   <ng-template #noImage>
     <p>No hay imagen disponible</p>
   </ng-template>
-  <!-- Puedes agregar más detalles sobre la captación aquí -->
   <p>Codigo: {{ captacion.id }}</p>
+  <p>Asesor: {{ captacion.asesor.f_name }}</p>
   <p>Descripción: {{ captacion.descripcion }}</p>
   <p>Precio: {{ captacion.precio }}</p>
   <p>Dirección: {{ captacion.direccion }}</p>
