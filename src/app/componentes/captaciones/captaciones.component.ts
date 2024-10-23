@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CaptacionesService } from '../../services/captaciones.service';
 import { NgFor, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-captaciones',
@@ -13,7 +14,10 @@ export class CaptacionesComponent {
   captaciones: any[] = [];
   captacionesWithImages: any[] = [];
 
-  constructor(private captacionesService: CaptacionesService) {}
+  constructor(
+    private captacionesService: CaptacionesService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadCaptaciones();
@@ -48,5 +52,10 @@ export class CaptacionesComponent {
       .catch((error) => {
         console.error('Error loading images:', error);
       });
+  }
+
+  // Método para redirigir al detalle de la captación
+  verDetalleCaptacion(id: number) {
+    this.router.navigate([`/captacion/${id}`]); // Redirigir a la ruta de detalle con el ID
   }
 }

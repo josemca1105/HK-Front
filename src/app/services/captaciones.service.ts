@@ -100,6 +100,31 @@ export class CaptacionesService {
     }
   }
 
+  // Obtener todas las imágenes de una captación en Firebase Storage usando el ID
+  async getAllImages(id: number): Promise<string[]> {
+    const folderRef = ref(this.storage, `Imagenes/HK-${id}/`);
+    const imageUrls: string[] = [];
+
+    try {
+      console.log(`Attempting to list items in folder: Imagenes/HK-${id}/`);
+      const result = await listAll(folderRef);
+      console.log('listAll result:', result);
+
+      for (let itemRef of result.items) {
+        console.log('Processing item:', itemRef.fullPath);
+        const imageUrl = await getDownloadURL(itemRef);
+        console.log('Image URL obtained:', imageUrl);
+        imageUrls.push(imageUrl);
+      }
+
+      console.log('Final imageUrls array:', imageUrls);
+      return imageUrls;
+    } catch (error) {
+      console.error('Error obtaining images:', error);
+      throw error;
+    }
+  }
+
   // Metodo para eliminar una imagen de Firebase Storage
   deleteImages(imageUrls: string[]): Promise<void[]> {
     const deletePromises: Promise<void>[] = imageUrls.map((url) => {

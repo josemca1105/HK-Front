@@ -1,8 +1,12 @@
 <div *ngFor="let captacion of captacionesWithImages">
-  <h3>{{ captacion.titulo }}</h3>
+  <h3 (click)="verDetalleCaptacion(captacion.id)" style="cursor: pointer">
+    {{ captacion.titulo }}
+  </h3>
   <img
     *ngIf="captacion.imagenes; else noImage"
     [src]="captacion.imagenes"
+    width="200"
+    height="200"
     alt="Imagen de {{ captacion.titulo }}"
   />
   <ng-template #noImage>
