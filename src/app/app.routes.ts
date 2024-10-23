@@ -6,6 +6,7 @@ import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { UsersTableComponent } from './admin/users-table/users-table.component';
 import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 import { CaptacionesPageComponent } from './pages/captaciones-page/captaciones-page.component';
+import { CaptacionViewComponent } from './componentes/captacion-view/captacion-view.component';
 import { CaptacionesAdminTableComponent } from './admin/captaciones-admin-table/captaciones-admin-table.component';
 import { CaptacionesPersonalCreateComponent } from './componentes/captaciones-personal-create/captaciones-personal-create.component';
 import { CaptacionesPersonalEditComponent } from './componentes/captaciones-personal-edit/captaciones-personal-edit.component';
@@ -39,6 +40,11 @@ export const routes: Routes = [
       {
         path: 'captaciones',
         component: CaptacionesPageComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'captacion/:id',
+        component: CaptacionViewComponent,
         canActivate: [authGuard],
       },
       {
