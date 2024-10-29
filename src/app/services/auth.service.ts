@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AxiosService } from './axios.service';
 import { CookieService } from 'ngx-cookie-service';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
