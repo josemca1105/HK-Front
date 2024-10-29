@@ -7,7 +7,7 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.prod';
 
 export const appConfig: ApplicationConfig = {
   providers: [
