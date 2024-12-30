@@ -1,82 +1,218 @@
-<div class="perfil-container">
-  <h1>Perfil del Usuario</h1>
+<div class="perfil-container p-4">
+  <div class="flex items-start md:items-center justify-between flex-col space-y-3 md:space-y-0 md:flex-row px-6">
+    <div class="flex items-center justify-start space-x-2">
+      <svg
+        class="w-16 h-16 text-[#d4b03e]"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="48"
+        height="48"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <span class="text-3xl font-semibold"
+        >{{ user?.f_name }} {{ user?.l_name }}</span
+      >
+    </div>
+    <div class="flex items-center justify-start space-x-2">
+      <button
+        (click)="editProfile()"
+        class="font-raleway font-semibold bg-[#EDD774] hover:bg-[#D4B03E] text-black px-6 py-3 rounded-lg transition duration-300 ease-in-out"
+      >
+        Editar Perfil
+      </button>
+
+      <!-- Botón para crear captaciones -->
+      <button
+        (click)="createCaptacion()"
+        class="font-raleway font-semibold bg-[#EDD774] hover:bg-[#D4B03E] text-black px-6 py-3 rounded-lg transition duration-300 ease-in-out"
+      >
+        Crear captacion
+      </button>
+    </div>
+  </div>
+
   <!-- Otros detalles del perfil aquí -->
 
-  <!-- Botón para editar el perfil -->
-  <button (click)="editProfile()" class="btn btn-primary">Editar Perfil</button>
-
-  <!-- Botón para crear captaciones -->
-  <button (click)="createCaptacion()" class="btn btn-primary">
-    Crear captacion
-  </button>
-
   <!-- Filtro de búsqueda -->
-  <div class="my-6 px-10">
-    <h2 class="font-bold font-raleway text-3xl text-[#20343d]">
-      Filtros de Búsqueda
-    </h2>
-    <div class="grid grid-cols-2 gap-4 my-4">
-      <input
-        type="text"
-        [(ngModel)]="filters.titulo"
-        placeholder="Título"
-        class="form-control"
-      />
-      <input
-        type="text"
-        [(ngModel)]="filters.direccion"
-        placeholder="Dirección"
-        class="form-control"
-      />
-      <select [(ngModel)]="filters.tipo" class="form-control">
-        <option value="" disabled selected hidden>
-          Escoja entre venta o alquiler
-        </option>
-        <option value="alquiler">Alquiler</option>
-        <option value="venta">Venta</option>
-      </select>
-      <input
-        type="number"
-        [(ngModel)]="filters.precio"
-        placeholder="Precio"
-        class="form-control"
-      />
-      <input
-        type="number"
-        [(ngModel)]="filters.banos"
-        placeholder="Baños"
-        class="form-control"
-      />
-      <input
-        type="number"
-        [(ngModel)]="filters.habitaciones"
-        placeholder="Habitaciones"
-        class="form-control"
-      />
-      <select [(ngModel)]="filters.pozo" class="form-control">
-        <option value="" disabled selected hidden>¿Tiene pozo?</option>
-        <option value="si">Si</option>
-        <option value="no">No</option>
-      </select>
-      <select [(ngModel)]="filters.planta" class="form-control">
-        <option value="" disabled selected hidden>¿Tiene planta?</option>
-        <option value="si">Si</option>
-        <option value="no">No</option>
-      </select>
-      <select [(ngModel)]="filters.documentos" class="form-control">
-        <option value="" disabled selected hidden>
-          ¿Esta listo para registro?
-        </option>
-        <option value="si">Si</option>
-        <option value="no">No</option>
-      </select>
+  <div class="w-full mx-auto p-4 md:p-6 lg:p-8">
+    <div class="bg-white rounded-lg shadow-lg">
+      <div
+        class="p-6 cursor-pointer flex justify-between items-center"
+        (click)="toggleAccordion()"
+      >
+        <h2 class="font-raleway text-xl font-semibold text-black">
+          Filtros de Búsqueda
+        </h2>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          [class.rotate-180]="isAccordionOpen"
+          class="h-6 w-6 transform transition-transform"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 10.586l3.71-3.356a.75.75 0 011.02 1.1l-4 3.75a.75.75 0 01-1.02 0l-4-3.75a.75.75 0 01.02-1.06z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </div>
+      <div
+        *ngIf="isAccordionOpen"
+        class="p-6 transition-all duration-300 ease-in-out"
+      >
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-[#40697B] font-poppins"
+            >
+              Título
+            </label>
+            <input
+              type="text"
+              class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#3FC0DD] focus:ring-2 focus:ring-[#3FC0DD]/20 outline-none transition-colors font-poppins"
+              placeholder="Ingrese título"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-[#40697B] font-poppins"
+            >
+              Dirección
+            </label>
+            <input
+              type="text"
+              class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#3FC0DD] focus:ring-2 focus:ring-[#3FC0DD]/20 outline-none transition-colors font-poppins"
+              placeholder="Ingrese dirección"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-[#40697B] font-poppins"
+            >
+              Tipo
+            </label>
+            <select
+              class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#3FC0DD] focus:ring-2 focus:ring-[#3FC0DD]/20 outline-none transition-colors font-poppins bg-white"
+            >
+              <option value="" disabled selected>
+                Escoja entre venta o alquiler
+              </option>
+              <option value="alquiler">Alquiler</option>
+              <option value="venta">Venta</option>
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-[#40697B] font-poppins"
+            >
+              Precio
+            </label>
+            <input
+              type="number"
+              class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#3FC0DD] focus:ring-2 focus:ring-[#3FC0DD]/20 outline-none transition-colors font-poppins"
+              placeholder="Ingrese precio"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-[#40697B] font-poppins"
+            >
+              Baños
+            </label>
+            <input
+              type="number"
+              class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#3FC0DD] focus:ring-2 focus:ring-[#3FC0DD]/20 outline-none transition-colors font-poppins"
+              placeholder="Número de baños"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-[#40697B] font-poppins"
+            >
+              Habitaciones
+            </label>
+            <input
+              type="number"
+              class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#3FC0DD] focus:ring-2 focus:ring-[#3FC0DD]/20 outline-none transition-colors font-poppins"
+              placeholder="Número de habitaciones"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-[#40697B] font-poppins"
+            >
+              Pozo
+            </label>
+            <select
+              class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#3FC0DD] focus:ring-2 focus:ring-[#3FC0DD]/20 outline-none transition-colors font-poppins bg-white"
+            >
+              <option value="" disabled selected>¿Tiene pozo?</option>
+              <option value="si">Si</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-[#40697B] font-poppins"
+            >
+              Planta
+            </label>
+            <select
+              class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#3FC0DD] focus:ring-2 focus:ring-[#3FC0DD]/20 outline-none transition-colors font-poppins bg-white"
+            >
+              <option value="" disabled selected>¿Tiene planta?</option>
+              <option value="si">Si</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <label
+              class="block text-sm font-medium text-[#40697B] font-poppins"
+            >
+              Documentos
+            </label>
+            <select
+              class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-[#3FC0DD] focus:ring-2 focus:ring-[#3FC0DD]/20 outline-none transition-colors font-poppins bg-white"
+            >
+              <option value="" disabled selected>
+                ¿Esta listo para registro?
+              </option>
+              <option value="si">Si</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-end">
+          <button
+            class="font-raleway font-semibold border border-gray-600 hover:bg-red-600 hover:text-white hover:border-red-600 text-gray-600 px-6 py-3 rounded-lg transition duration-300 ease-in-out"
+          >
+            Limpiar Filtros
+          </button>
+          <button
+            class="font-raleway font-semibold bg-[#EDD774] hover:bg-[#D4B03E] text-black px-6 py-3 rounded-lg transition duration-300 ease-in-out"
+          >
+            Aplicar Filtros
+          </button>
+        </div>
+      </div>
     </div>
-    <button (click)="applyFilters()" class="btn btn-primary">
-      Aplicar Filtros
-    </button>
-    <button (click)="clearFilters()" class="btn btn-secondary">
-      Limpiar Filtros
-    </button>
   </div>
 
   <div class="px-10">
@@ -503,12 +639,15 @@
           </tr>
         </tbody>
       </table>
-      <div class="flex justify-center">
+    </div>
+    <div class="w-full mt-5">
+      <div class="flex items-center justify-center">
         <pagination-controls
           (pageChange)="page = $event"
           [responsive]="true"
           previousLabel="Anterior"
           nextLabel="Siguiente"
+          class="my-pagination"
         >
         </pagination-controls>
       </div>
@@ -527,3 +666,40 @@
     (close)="closeDeleteModal()"
   ></app-captaciones-delete-modal>
 </div>
+
+<style>
+  ::ng-deep .my-pagination {
+    display: flex;
+    align-items: center;
+    color: #20343d;
+  }
+
+  ::ng-deep .my-pagination .ngx-pagination {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  ::ng-deep .my-pagination .ngx-pagination li {
+    list-style: none;
+    margin: 0 0.5rem;
+  }
+
+  ::ng-deep .my-pagination .ngx-pagination li a,
+  ::ng-deep .my-pagination .ngx-pagination li.current {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  ::ng-deep .my-pagination .ngx-pagination li.current {
+    background-color: #3fc0dd;
+    color: white;
+  }
+
+  ::ng-deep .my-pagination .ngx-pagination li a:hover {
+    background-color: #40697b;
+    color: white;
+  }
+</style>

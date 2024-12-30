@@ -26,13 +26,15 @@ export class CaptacionesPersonalCreateComponent {
     n_habitaciones: '',
     disponibilidad: 'disponible',
     status: 'activo',
-    pozo: '',
-    planta: '',
-    documentos: '',
+    pozo: false,
+    planta: false,
+    documentos: false,
     observaciones: 'Sin observaciones',
     imagenes: [],
     codigo: '',
   };
+
+  public isLoading: boolean = false;
 
   selectedFiles: FileList | null = null;
 
@@ -114,9 +116,11 @@ export class CaptacionesPersonalCreateComponent {
       this.router.navigate(['/perfil']);
     } catch (error) {
       console.error('Error al crear la captación', error);
+      this.isLoading = false;
       // Aquí puedes agregar un manejo de errores más detallado, como mostrar un mensaje al usuario
       // this.showErrorMessage(error.message);
     }
+    this.isLoading = true;
   }
 
   // Método auxiliar para validar el formulario

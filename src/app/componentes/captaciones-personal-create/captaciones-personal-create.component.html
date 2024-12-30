@@ -1,171 +1,287 @@
-<div class="container">
-  <h1>Create captacion</h1>
-  <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="titulo">Titulo:</label>
-      <input
-        type="text"
-        id="titulo"
-        name="titulo"
-        [(ngModel)]="captacion.titulo"
-        class="form-control"
-        placeholder="Título"
-      />
-    </div>
-    <div class="form-group">
-      <label for="descripcion">Descripción:</label>
-      <textarea
-        id="descripcion"
-        name="descripcion"
-        [(ngModel)]="captacion.descripcion"
-        class="form-control"
-        placeholder="Descripción"
-        rows="6"
-        cols="50"
-      ></textarea>
-    </div>
-    <div class="form-group">
-      <label for="direccion">Dirección:</label>
-      <input
-        type="text"
-        id="direccion"
-        name="direccion"
-        [(ngModel)]="captacion.direccion"
-        class="form-control"
-        placeholder="Dirección"
-      />
-    </div>
-    <div class="form-group">
-      <label for="estado">Estado:</label>
-      <input
-        type="text"
-        id="estado"
-        name="estado"
-        [(ngModel)]="captacion.estado"
-        class="form-control"
-        placeholder="Estado"
-      />
-    </div>
-    <div class="form-group">
-      <label for="ciudad">Ciudad:</label>
-      <input
-        type="text"
-        id="ciudad"
-        name="ciudad"
-        [(ngModel)]="captacion.ciudad"
-        class="form-control"
-        placeholder="Ciudad"
-      />
-    </div>
-    <div class="form-group">
-      <label for="precio">Precio:</label>
-      <input
-        type="number"
-        id="precio"
-        name="precio"
-        [(ngModel)]="captacion.precio"
-        class="form-control"
-        placeholder="Precio"
-      />
-    </div>
-    <div class="form-group">
-      <label for="banos">N° de Baños:</label>
-      <input
-        type="number"
-        id="banos"
-        name="banos"
-        [(ngModel)]="captacion.n_banos"
-        class="form-control"
-        placeholder="N° de Baños"
-      />
-    </div>
-    <div class="form-group">
-      <label for="habitaciones">N° de Habitaciones:</label>
-      <input
-        type="number"
-        id="habitaciones"
-        name="habitaciones"
-        [(ngModel)]="captacion.n_habitaciones"
-        class="form-control"
-        placeholder="N° de Habitaciones"
-      />
-    </div>
-    <div class="form-group">
-      <label for="tipo">Tipo:</label>
-      <select
-        id="tipo"
-        name="tipo"
-        [(ngModel)]="captacion.tipo"
-        class="form-control"
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+  <div class="w-full px-10 mx-auto">
+    <h1 class="text-3xl font-raleway font-bold text-[#40697B] mb-4">
+      Crear captación
+    </h1>
+
+    <form (ngSubmit)="onSubmit()" class="font-poppins">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <!-- Título -->
+        <div class="col-span-2">
+          <label for="titulo" class="block font-medium text-gray-600 mb-2"
+            >Título</label
+          >
+          <input
+            type="text"
+            id="titulo"
+            name="titulo"
+            [(ngModel)]="captacion.titulo"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            placeholder="Ingrese título"
+          />
+        </div>
+
+        <!-- Descripción -->
+        <div class="col-span-2">
+          <label for="descripcion" class="block font-medium text-gray-600 mb-2"
+            >Descripción</label
+          >
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            [(ngModel)]="captacion.descripcion"
+            rows="4"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            placeholder="Ingrese descripción"
+          ></textarea>
+        </div>
+
+        <!-- Dirección -->
+        <div class="col-span-2">
+          <label for="direccion" class="block font-medium text-gray-600 mb-2"
+            >Dirección</label
+          >
+          <input
+            type="text"
+            id="direccion"
+            name="direccion"
+            [(ngModel)]="captacion.direccion"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            placeholder="Ingrese dirección"
+          />
+        </div>
+
+        <!-- Estado y Ciudad -->
+        <div>
+          <label for="estado" class="block font-medium text-gray-600 mb-2"
+            >Estado</label
+          >
+          <input
+            type="text"
+            id="estado"
+            name="estado"
+            [(ngModel)]="captacion.estado"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            placeholder="Ingrese estado"
+          />
+        </div>
+
+        <div>
+          <label for="ciudad" class="block font-medium text-gray-600 mb-2"
+            >Ciudad</label
+          >
+          <input
+            type="text"
+            id="ciudad"
+            name="ciudad"
+            [(ngModel)]="captacion.ciudad"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            placeholder="Ingrese ciudad"
+          />
+        </div>
+
+        <!-- Precio -->
+        <div>
+          <label for="precio" class="block font-medium text-gray-600 mb-2"
+            >Precio</label
+          >
+          <input
+            type="number"
+            id="precio"
+            name="precio"
+            [(ngModel)]="captacion.precio"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            placeholder="Ingrese precio"
+          />
+        </div>
+
+        <!-- Tipo -->
+        <div>
+          <label for="tipo" class="block font-medium text-gray-600 mb-2"
+            >Tipo</label
+          >
+          <select
+            id="tipo"
+            name="tipo"
+            [(ngModel)]="captacion.tipo"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200 bg-white"
+          >
+            <option value="" disabled selected>Seleccione un tipo</option>
+            <option value="alquiler">Alquiler</option>
+            <option value="venta">Venta</option>
+          </select>
+        </div>
+
+        <!-- Baños y Habitaciones -->
+        <div>
+          <label for="banos" class="block font-medium text-gray-600 mb-2"
+            >N° de Baños</label
+          >
+          <input
+            type="number"
+            id="banos"
+            name="banos"
+            [(ngModel)]="captacion.n_banos"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            placeholder="Ingrese número de baños"
+          />
+        </div>
+
+        <div>
+          <label for="habitaciones" class="block font-medium text-gray-600 mb-2"
+            >N° de Habitaciones</label
+          >
+          <input
+            type="number"
+            id="habitaciones"
+            name="habitaciones"
+            [(ngModel)]="captacion.n_habitaciones"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            placeholder="Ingrese número de habitaciones"
+          />
+        </div>
+
+        <!-- Pozo, Planta y Documentos -->
+        <div class="col-span-2 flex flex-wrap gap-8 items-center">
+          <div class="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="pozo"
+              name="pozo"
+              [(ngModel)]="captacion.pozo"
+              class="w-5 h-5 rounded border-gray-300 text-[#3FC0DD] focus:ring-[#3FC0DD] cursor-pointer"
+            />
+            <label for="pozo" class="font-medium text-gray-600 cursor-pointer">
+              Pozo
+            </label>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="planta"
+              name="planta"
+              [(ngModel)]="captacion.planta"
+              class="w-5 h-5 rounded border-gray-300 text-[#3FC0DD] focus:ring-[#3FC0DD] cursor-pointer"
+            />
+            <label
+              for="planta"
+              class="font-medium text-gray-600 cursor-pointer"
+            >
+              Planta
+            </label>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="documentos"
+              name="documentos"
+              [(ngModel)]="captacion.documentos"
+              class="w-5 h-5 rounded border-gray-300 text-[#3FC0DD] focus:ring-[#3FC0DD] cursor-pointer"
+            />
+            <label
+              for="documentos"
+              class="font-medium text-gray-600 cursor-pointer"
+            >
+              Documentos
+            </label>
+          </div>
+        </div>
+
+        <!-- Observaciones -->
+        <div class="col-span-2">
+          <label
+            for="observaciones"
+            class="block font-medium text-gray-600 mb-2"
+            >Observaciones</label
+          >
+          <textarea
+            id="observaciones"
+            name="observaciones"
+            [(ngModel)]="captacion.observaciones"
+            rows="4"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            placeholder="Ingrese observaciones"
+          ></textarea>
+        </div>
+
+        <!-- Imágenes -->
+        <div class="col-span-2">
+          <label for="imagenes" class="block font-medium text-gray-600 mb-2"
+            >Imágenes</label
+          >
+          <input
+            type="file"
+            id="imagenes"
+            name="imagenes"
+            (change)="onFilesSelected($event)"
+            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#3FC0DD] focus:border-transparent transition duration-200"
+            multiple
+          />
+        </div>
+      </div>
+
+      <button
+        id="create-user-button"
+        type="submit"
+        class="relative w-full h-12 font-medium text-lg uppercase tracking-widest bg-[#edd774] text-black border-none cursor-pointer flex items-center justify-center focus:outline-none transition-colors duration-200 ease-in-out overflow-hidden font-raleway mt-4"
       >
-        <option value="" disabled selected hidden>Seleccione un tipo</option>
-        <option value="alquiler">Alquiler</option>
-        <option value="venta">Venta</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="pozo">Pozo:</label>
-      <select
-        id="pozo"
-        name="pozo"
-        [(ngModel)]="captacion.pozo"
-        class="form-control"
-      >
-        <option value="" disabled selected hidden>Seleccione una opción</option>
-        <option value="si">Si</option>
-        <option value="no">No</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="planta">Planta:</label>
-      <select
-        id="planta"
-        name="planta"
-        [(ngModel)]="captacion.planta"
-        class="form-control"
-      >
-        <option value="" disabled selected hidden>Seleccione una opción</option>
-        <option value="si">Si</option>
-        <option value="no">No</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="documentos">Documentos:</label>
-      <select
-        id="documentos"
-        name="documentos"
-        [(ngModel)]="captacion.documentos"
-        class="form-control"
-      >
-        <option value="" disabled selected hidden>Seleccione una opción</option>
-        <option value="si">Si</option>
-        <option value="no">No</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="observaciones">Observaciones:</label>
-      <textarea
-        id="observaciones"
-        name="observaciones"
-        [(ngModel)]="captacion.observaciones"
-        class="form-control"
-        placeholder="Observaciones"
-        rows="6"
-        cols="50"
-      ></textarea>
-    </div>
-    <div class="form-group">
-      <label for="imagenes">Imágenes:</label>
-      <input
-        type="file"
-        id="imagenes"
-        name="imagenes"
-        (change)="onFilesSelected($event)"
-        class="form-control"
-        multiple
-      />
-    </div>
-    <button type="submit" class="bg-teal-600">Create captación</button>
-    <a routerLink="/perfil">Volver</a>
-  </form>
+        <span *ngIf="!isLoading" class="relative z-10">Crear captación</span>
+        <div
+          *ngIf="isLoading"
+          class="relative z-10 bg-[#d4b03e] w-full h-full flex items-center justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            role="status"
+            class="inline w-5 h-5 text-black animate-spin"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="#E5E7EB"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentColor"
+            />
+          </svg>
+          <span class="text-black ml-3">Cargando...</span>
+        </div>
+      </button>
+    </form>
+  </div>
 </div>
+
+<style>
+  #create-user-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%; /* Inicialmente el triángulo está fuera del botón */
+    width: 100%;
+    height: 100%;
+    background-color: #d4b03e; /* Color amarillo oscuro en hover */
+    clip-path: polygon(
+      0 0,
+      /* Esquina superior izquierda */ 100% 0,
+      /* Esquina superior derecha */ 100% 100%,
+      /* Esquina inferior derecha */ 0 100% /* Esquina inferior izquierda */
+    ); /* Triángulo invertido cubriendo todo el botón */
+    transition: left 0.5s ease; /* Suaviza la transición del clip-path */
+    z-index: 0;
+  }
+
+  #create-user-button:hover::before {
+    left: 0; /* Mueve el triángulo para cubrir el botón */
+    clip-path: polygon(
+      0 0,
+      /* Esquina superior izquierda */ 100% 0,
+      /* Esquina superior derecha */ 100% 100%,
+      /* Esquina inferior derecha */ 0 100% /* Esquina inferior izquierda */
+    ); /* Triángulo invertido cubriendo todo el botón */
+  }
+</style>

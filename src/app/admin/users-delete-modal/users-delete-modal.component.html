@@ -1,8 +1,24 @@
-<div class="modal-backdrop">
-  <div class="modal">
-    <h2>Confirmar eliminación</h2>
-    <p>¿Estás seguro de que quieres eliminar este usuario?</p>
-    <button (click)="confirmDelete()">Confirmar</button>
-    <button (click)="cancel()">Cancelar</button>
+<div
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-65"
+>
+  <div class="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+    <h1 class="text-2xl font-bold font-raleway">Eliminar Usuario</h1>
+    <div class="space-y-4 mt-3 mb-5 font-poppins">
+      <p>¿Estás seguro de que quieres eliminar este usuario?</p>
+      <div class="flex items-center justify-end space-x-3">
+        <button
+          (click)="confirmDelete()"
+          class="font-raleway font-semibold bg-red-600 hover:bg-red-800 text-white px-6 py-3 rounded-lg transition duration-300 ease-in-out"
+        >
+          Eliminar
+        </button>
+        <button
+          (click)="cancel()"
+          class="font-raleway font-semibold bg-transparent border border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white px-6 py-3 rounded-lg transition duration-300 ease-in-out"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
   </div>
 </div>

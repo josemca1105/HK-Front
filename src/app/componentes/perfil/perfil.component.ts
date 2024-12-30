@@ -25,6 +25,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   styleUrls: ['./perfil.component.scss'],
 })
 export class PerfilComponent implements OnInit {
+  user: any = {};
   userId: number | null = null;
   captacionId: number | null = null;
   captaciones: any[] = [];
@@ -45,6 +46,11 @@ export class PerfilComponent implements OnInit {
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
   page: number = 1;
+  isAccordionOpen: boolean = false;
+
+  toggleAccordion(): void {
+    this.isAccordionOpen = !this.isAccordionOpen;
+  }
 
   sortTable(column: string) {
     if (this.sortColumn === column) {
@@ -74,6 +80,8 @@ export class PerfilComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
+      this.user = await this.authService.getUser();
+      console.log('Got user', this.user);
       const response = await this.authService.getUser();
       if (response && response.id) {
         this.userId = response.id;

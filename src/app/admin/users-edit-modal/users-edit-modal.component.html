@@ -1,39 +1,171 @@
-<div class="edit-user-container">
-  <h2>Edit User Role</h2>
-
-  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
-    <div class="form-group">
-      <label for="userName">User Name</label>
-      <input
-        type="text"
-        id="userName"
-        name="userName"
-        [(ngModel)]="user.f_name"
-        class="form-control"
-        disabled
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="role">Nuevo Rol:</label>
-      <select
-        id="role"
-        name="role"
-        [(ngModel)]="user.role"
-        class="form-control"
+<div
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-65"
+>
+  <div class="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+    <!-- Botón de cerrar -->
+    <button
+      class="absolute top-3 right-3 text-black hover:text-red-600"
+      (click)="closeModal()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-x"
       >
-        <option value="admin">Administrador</option>
-        <option value="asesor">Asesor</option>
-      </select>
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </button>
+    <h1 class="text-2xl font-bold font-raleway">Editar Usuario</h1>
+
+    <!-- Mensaje de error -->
+    <div
+      *ngIf="showAlert"
+      class="alert alert-error font-poppins bg-red-200 p-3 mt-3 rounded-md flex items-center justify-between"
+      [ngClass]="{ 'fade-out': alertFadeOut }"
+    >
+      <p class="font-poppins text-red-500">{{ errorMessage }}</p>
+      <button class="text-red-500 hover:text-red-600" (click)="dismissError()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-x"
+        >
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">
-      Update Role
-    </button>
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+      <div class="space-y-4 mt-3 mb-5 font-poppins">
+        <!-- Campo de Nombre -->
+        <div class="relative">
+          <input
+            type="text"
+            id="f_name"
+            name="f_name"
+            [(ngModel)]="user.f_name"
+            class="pl-10 text-black w-full bg-transparent placeholder-black border-0 border-b-2 focus:ring-0 focus:border-[#3FC0DD] focus:outline-none focus:transition-colors focus:duration-300"
+            placeholder="Nombre"
+            disabled
+          />
+          <i class="absolute left-2 top-1/2 transform -translate-y-1/2">
+            <!-- SVG del ícono -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-user-round-pen"
+            >
+              <path d="M2 21a8 8 0 0 1 10.821-7.487" />
+              <path
+                d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
+              />
+              <circle cx="10" cy="8" r="5" />
+            </svg>
+          </i>
+        </div>
 
-    <!-- Botón para cerrar el modal -->
-    <button type="button" class="btn btn-secondary" (click)="closeModal()">
-      Close
-    </button>
-  </form>
+        <div class="relative flex flex-col space-y-2">
+          <label for="role" class="text-black">Nuevo Rol</label>
+          <select
+            id="role"
+            name="role"
+            [(ngModel)]="user.role"
+            class="w-full appearance-none rounded-md outline-none border border-gray-400 focus:ring-2 focus:ring-[#3fc0dd] focus:border-[#3fc0dd] transition-colors duration-300"
+          >
+            <option value="admin">Administrador</option>
+            <option value="asesor">Asesor</option>
+          </select>
+        </div>
+      </div>
+
+      <button
+        id="create-user-button"
+        type="submit"
+        [disabled]="!userForm.valid"
+        class="relative w-full h-10 font-medium uppercase tracking-widest bg-[#edd774] text-black border-none cursor-pointer flex items-center justify-center focus:outline-none transition-colors duration-200 ease-in-out overflow-hidden font-raleway"
+      >
+        <span *ngIf="!isLoading" class="relative z-10">Editar</span>
+        <div
+          *ngIf="isLoading"
+          class="relative z-10 bg-[#d4b03e] w-full h-full flex items-center justify-center"
+        >
+          <svg
+            aria-hidden="true"
+            role="status"
+            class="inline w-5 h-5 text-black animate-spin"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="#E5E7EB"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentColor"
+            />
+          </svg>
+          <span class="text-black ml-3">Cargando...</span>
+        </div>
+      </button>
+    </form>
+  </div>
 </div>
+
+<style>
+  .relative input:focus + i {
+    color: #3fc0dd;
+    transition: all ease-in-out 300ms;
+  }
+  #create-user-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%; /* Inicialmente el triángulo está fuera del botón */
+    width: 100%;
+    height: 100%;
+    background-color: #d4b03e; /* Color amarillo oscuro en hover */
+    clip-path: polygon(
+      0 0,
+      /* Esquina superior izquierda */ 100% 0,
+      /* Esquina superior derecha */ 100% 100%,
+      /* Esquina inferior derecha */ 0 100% /* Esquina inferior izquierda */
+    ); /* Triángulo invertido cubriendo todo el botón */
+    transition: left 0.5s ease; /* Suaviza la transición del clip-path */
+    z-index: 0;
+  }
+
+  #create-user-button:hover::before {
+    left: 0; /* Mueve el triángulo para cubrir el botón */
+    clip-path: polygon(
+      0 0,
+      /* Esquina superior izquierda */ 100% 0,
+      /* Esquina superior derecha */ 100% 100%,
+      /* Esquina inferior derecha */ 0 100% /* Esquina inferior izquierda */
+    ); /* Triángulo invertido cubriendo todo el botón */
+  }
+</style>
